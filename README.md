@@ -84,7 +84,143 @@ CONTRIBUTOR WILL BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, OR
 CONSEQUENTIAL DAMAGES ARISING IN ANY WAY OUT OF THE USE OF THE PACKAGE,
 EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-Configuration For Example Setup
+# Configuration For Example Setup
+
+# OXD Perl Demo site
+
+This is a demo site for oxd-perl written using Perl (CGI) to demonstrate how to use oxd-perl to perform authorization with an OpenID Provider and fetch information.
+
+## Deployment
+
+### Prerequisites
+
+Ubuntu 14.04 with some basic utilities listed below
+
+```bash
+$ sudo apt-get update
+$ sudo apt-get install apache2
+$ a2enmod ssl
+```
+
+### Installing and configuring the oxd-server
+You can download the oxd-server and follow the installation instructions from [here](https://www.gluu.org/docs-oxd)
+
+## Demosite deployment
+
+OpenID Connect works only with HTTPS connections. So let us get the ssl certs ready.
+```bash
+$ mkdir /etc/certs
+$ cd /etc/certs
+$ openssl genrsa -des3 -out demosite.key 2048
+$ openssl rsa -in demosite.key -out demosite.key.insecure
+$ mv demosite.key.insecure demosite.key
+$ openssl req -new -key demosite.key -out demosite.csr
+$ openssl x509 -req -days 365 -in demosite.csr -signkey demosite.key -out demosite.crt
+```
+
+###Install Perl on ubuntu
+
+```bash
+$ sudo apt-get install perl
+$ sudo apt-get install libapache2-mod-perl2 
+
+```
+Then create virtual host of oxd-perl ""odx-perl.conf" under /etc/apache2/sites-available/  file and add these lines :
+
+```bash
+$ cd /etc/apache2/sites-available
+$ vim oxd-perl.conf
+
+```
+add below mention lines on  virtual host file
+
+```
+<IfModule mod_ssl.c>
+    <VirtualHost _default_:443>
+    
+        DocumentRoot /var/www/html/oxd-perl/example/
+        ServerName www.oxd-perl.com
+        ServerAlias oxd-perl.com
+
+        <Directory /var/www/html/oxd-perl/example/>
+			AllowOverride All
+        </Directory>
+
+        ErrorLog /var/www/html/oxd-perl/example/error.log
+        CustomLog /var/www/html/oxd-perl/example/access.log combined
+         
+        AddType application/x-httpd-php .php
+           <Files 'xmlrpc.php'>
+                   Order Allow,Deny
+                   deny from all
+           </Files>
+
+        SSLEngine on
+        SSLCertificateFile  /etc/certs/demosite.crt
+        SSLCertificateKeyFile /etc/certs/demosite.key
+
+		<FilesMatch "\.(cgi|shtml|phtml|php)$">
+			SSLOptions +StdEnvVars
+		</FilesMatch>
+		
+		# processes .cgi and .pl as CGI scripts
+
+		ScriptAlias /cgi-bin/ /var/www/html/oxd-perl/example/
+		<Directory "/var/www/html/oxd-perl">
+			Options +ExecCGI
+			SSLOptions +StdEnvVars
+			AddHandler cgi-script .cgi .pl
+		</Directory>
+	
+		BrowserMatch "MSIE [2-6]" \
+            nokeepalive ssl-unclean-shutdown \
+            downgrade-1.0 force-response-1.0
+		BrowserMatch "MSIE [17-9]" ssl-unclean-shutdown
+		
+	</VirtualHost>
+</IfModule>
+```
+
+Then enable `oxd-perl.conf` virtual host by running:
+
+```bash
+
+$ sudo a2ensite oxd-perl.conf 
+
+```
+
+After that add domain name in virtual host file.
+In console:
+
+```bash
+
+$ sudo nano /etc/hosts
+
+```
+
+Add these lines in virtual host file:
+```
+127.0.0.1 www.oxd-perl-example.com
+127.0.0.1  oxd-perl-example.com
+
+```
+
+Reload the apache server
+
+```bash
+$ sudo service apache2 restart
+
+```
+### Setting up and running demo app
+
+Navigate to perl app root:
+
+```bash
+
+cd /var/www/html/oxd-perl/
+
+```
+
 
 The oxd-perl configuration file is located in 'oxd-settings.json'. The values here are used during registration. For a full list of supported oxd configuration parameters, see the oxd documentation Below is a typical configuration data set for registration:
 
@@ -233,4 +369,6 @@ Example
 	$session->delete();
     $logoutUrl = $logout->getResponseObject()->{data}->{uri};
 
+Now your perl app should work from https://oxd-perl-example.com/
 
+##Enjoy!
