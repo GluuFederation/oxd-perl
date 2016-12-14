@@ -185,7 +185,7 @@ Then enable `oxd-perl.conf` virtual host by running:
 
 ```bash
 
-$ sudo a2ensite oxd-perl.conf 
+$ sudo a2ensite oxd-perl-example.conf 
 
 ```
 
