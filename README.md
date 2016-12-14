@@ -13,9 +13,11 @@ to provide version information here so that people can decide whether
 fixes for the module are worth downloading.
 
 
-INSTALLATION
+# INSTALLATION
 
-To install this module, run the following commands:
+To install this module, run the following commands on following path:
+    
+    Path : /var/www/html/oxd-perl/oxdPerl/
 
 	perl Makefile.PL
 	make
@@ -217,7 +219,11 @@ Navigate to perl app root:
 
 ```bash
 
-cd /var/www/html/oxd-perl/
+Copy example folder from oxdPerl directory and placed on root folder
+
+cd /var/www/html/oxd-perl/example
+
+
 
 ```
 
