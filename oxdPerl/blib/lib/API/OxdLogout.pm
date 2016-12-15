@@ -1,7 +1,10 @@
 #!/usr/bin/perl
-# GetTokenByCode.pm, a number as an object
+# OxdLogout.pm, a number as an object
 
 package OxdLogout;	# This is the &quot;Class&quot;
+    use vars qw($VERSION);
+    $VERSION = '0.01';
+    
     use API::OxdClient;
 	use base qw(OxdClient Class::Accessor);
 	use strict;

@@ -5,6 +5,10 @@ package Attribute::Abstract;
 
 
 package OxdClient;	# This is the &quot;Class&quot;
+    
+    use vars qw($VERSION);
+    $VERSION = '0.01';
+     
     use API::OxdClientSocket;
     our @ISA = qw(OxdClientSocket);    # inherits from OxdClient
 	# makes all attributes available
@@ -17,6 +21,8 @@ package OxdClient;	# This is the &quot;Class&quot;
 	use Data::Dumper qw(Dumper);
 	use utf8;
 	use Encode;
+	
+	
 	sub new {
 		my $class = shift;
 		my $self = {

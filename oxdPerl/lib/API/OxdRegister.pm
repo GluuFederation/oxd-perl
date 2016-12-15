@@ -42,6 +42,9 @@
 use JSON::PP;
 
 package OxdRegister;	# This is the &quot;Class&quot;
+    use vars qw($VERSION);
+    $VERSION = '0.01';
+    
 	use API::OxdClient;
 	use base qw(OxdClient Class::Accessor);
 	#use base 'OxdClient';

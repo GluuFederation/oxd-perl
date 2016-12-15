@@ -23,7 +23,7 @@
 #     TEST_REQUIRES => {  }
 #     VERSION_FROM => q[lib/oxdPerl.pm]
 #     clean => { FILES=>q[oxdPerl-*] }
-#     dist => { SUFFIX=>q[gz], COMPRESS=>q[gzip -9f] }
+#     dist => { COMPRESS=>q[gzip -9f], SUFFIX=>q[gz] }
 
 # --- MakeMaker post_initialize section:
 
@@ -200,26 +200,26 @@ TO_INST_PM = lib/API/GetAuthorizationUrl.pm \
 	lib/API/UpdateRegistration.pm \
 	lib/oxdPerl.pm
 
-PM_TO_BLIB = lib/API/OxdClientSocket.pm \
-	blib/lib/API/OxdClientSocket.pm \
-	lib/API/GetUserInfo.pm \
-	blib/lib/API/GetUserInfo.pm \
+PM_TO_BLIB = lib/API/GetAuthorizationUrl.pm \
+	blib/lib/API/GetAuthorizationUrl.pm \
 	lib/API/OxdClient.pm \
 	blib/lib/API/OxdClient.pm \
-	lib/API/OxdConfig.pm \
-	blib/lib/API/OxdConfig.pm \
-	lib/API/OxdRegister.pm \
-	blib/lib/API/OxdRegister.pm \
 	lib/API/OxdLogout.pm \
 	blib/lib/API/OxdLogout.pm \
-	lib/API/GetAuthorizationUrl.pm \
-	blib/lib/API/GetAuthorizationUrl.pm \
-	lib/API/UpdateRegistration.pm \
-	blib/lib/API/UpdateRegistration.pm \
+	lib/API/OxdClientSocket.pm \
+	blib/lib/API/OxdClientSocket.pm \
 	lib/API/GetTokenByCode.pm \
 	blib/lib/API/GetTokenByCode.pm \
+	lib/API/UpdateRegistration.pm \
+	blib/lib/API/UpdateRegistration.pm \
+	lib/API/OxdRegister.pm \
+	blib/lib/API/OxdRegister.pm \
+	lib/API/OxdConfig.pm \
+	blib/lib/API/OxdConfig.pm \
 	lib/oxdPerl.pm \
-	blib/lib/oxdPerl.pm
+	blib/lib/oxdPerl.pm \
+	lib/API/GetUserInfo.pm \
+	blib/lib/API/GetUserInfo.pm
 
 
 # --- MakeMaker platform_constants section:
@@ -442,11 +442,11 @@ POD2MAN = $(POD2MAN_EXE)
 
 
 manifypods : pure_all  \
-	lib/oxdPerl.pm \
-	lib/API/OxdConfig.pm
+	lib/API/OxdConfig.pm \
+	lib/oxdPerl.pm
 	$(NOECHO) $(POD2MAN) --section=$(MAN3EXT) --perm_rw=$(PERM_RW) \
-	  lib/oxdPerl.pm $(INST_MAN3DIR)/oxdPerl.$(MAN3EXT) \
-	  lib/API/OxdConfig.pm $(INST_MAN3DIR)/API::OxdConfig.$(MAN3EXT) 
+	  lib/API/OxdConfig.pm $(INST_MAN3DIR)/API::OxdConfig.$(MAN3EXT) \
+	  lib/oxdPerl.pm $(INST_MAN3DIR)/oxdPerl.$(MAN3EXT) 
 
 
 
@@ -473,24 +473,24 @@ clean_subdirs :
 
 clean :: clean_subdirs
 	- $(RM_F) \
-	  core core.*perl.*.? \
-	  $(BASEEXT).bso pm_to_blib.ts \
-	  core.[0-9][0-9][0-9][0-9][0-9] perl \
-	  *$(OBJ_EXT) $(BASEEXT).def \
-	  so_locations blibdirs.ts \
-	  core.[0-9][0-9][0-9] perlmain.c \
-	  *perl.core tmon.out \
-	  lib$(BASEEXT).def $(INST_ARCHAUTODIR)/extralibs.all \
-	  pm_to_blib mon.out \
-	  $(INST_ARCHAUTODIR)/extralibs.ld MYMETA.yml \
-	  perl$(EXE_EXT) MYMETA.json \
-	  core.[0-9][0-9] $(BASEEXT).x \
-	  $(BASEEXT).exp *$(LIB_EXT) \
-	  $(BOOTSTRAP) $(MAKE_APERL_FILE) \
-	  perl.exe core.[0-9] \
-	  core.[0-9][0-9][0-9][0-9] 
+	  perl$(EXE_EXT) lib$(BASEEXT).def \
+	  $(INST_ARCHAUTODIR)/extralibs.all *$(LIB_EXT) \
+	  pm_to_blib.ts core.[0-9][0-9][0-9][0-9] \
+	  core.[0-9] so_locations \
+	  perlmain.c blibdirs.ts \
+	  $(BASEEXT).def core \
+	  $(BOOTSTRAP) perl \
+	  core.[0-9][0-9][0-9][0-9][0-9] *perl.core \
+	  core.[0-9][0-9][0-9] *$(OBJ_EXT) \
+	  $(MAKE_APERL_FILE) core.*perl.*.? \
+	  MYMETA.json pm_to_blib \
+	  $(BASEEXT).x perl.exe \
+	  $(BASEEXT).bso MYMETA.yml \
+	  $(BASEEXT).exp mon.out \
+	  core.[0-9][0-9] $(INST_ARCHAUTODIR)/extralibs.ld \
+	  tmon.out 
 	- $(RM_RF) \
-	  oxdPerl-* blib 
+	  blib oxdPerl-* 
 	- $(MV) $(FIRST_MAKEFILE) $(MAKEFILE_OLD) $(DEV_NULL)
 
 
@@ -520,7 +520,7 @@ metafile : create_distdir
 	$(NOECHO) $(ECHO) 'configure_requires:' >> META_new.yml
 	$(NOECHO) $(ECHO) '  ExtUtils::MakeMaker: 0' >> META_new.yml
 	$(NOECHO) $(ECHO) 'dynamic_config: 1' >> META_new.yml
-	$(NOECHO) $(ECHO) 'generated_by: '\''ExtUtils::MakeMaker version 6.66, CPAN::Meta::Converter version 2.120921'\''' >> META_new.yml
+	$(NOECHO) $(ECHO) 'generated_by: '\''ExtUtils::MakeMaker version 6.66, CPAN::Meta::Converter version 2.133380'\''' >> META_new.yml
 	$(NOECHO) $(ECHO) 'license: unknown' >> META_new.yml
 	$(NOECHO) $(ECHO) 'meta-spec:' >> META_new.yml
 	$(NOECHO) $(ECHO) '  url: http://module-build.sourceforge.net/META-spec-v1.4.html' >> META_new.yml
@@ -541,7 +541,7 @@ metafile : create_distdir
 	$(NOECHO) $(ECHO) '      "Ourdesignz <gaurav.chhabra6785@gmail.com>"' >> META_new.json
 	$(NOECHO) $(ECHO) '   ],' >> META_new.json
 	$(NOECHO) $(ECHO) '   "dynamic_config" : 1,' >> META_new.json
-	$(NOECHO) $(ECHO) '   "generated_by" : "ExtUtils::MakeMaker version 6.66, CPAN::Meta::Converter version 2.120921",' >> META_new.json
+	$(NOECHO) $(ECHO) '   "generated_by" : "ExtUtils::MakeMaker version 6.66, CPAN::Meta::Converter version 2.133380",' >> META_new.json
 	$(NOECHO) $(ECHO) '   "license" : [' >> META_new.json
 	$(NOECHO) $(ECHO) '      "unknown"' >> META_new.json
 	$(NOECHO) $(ECHO) '   ],' >> META_new.json
@@ -863,16 +863,16 @@ ppd :
 
 pm_to_blib : $(FIRST_MAKEFILE) $(TO_INST_PM)
 	$(NOECHO) $(ABSPERLRUN) -MExtUtils::Install -e 'pm_to_blib({@ARGV}, '\''$(INST_LIB)/auto'\'', q[$(PM_FILTER)], '\''$(PERM_DIR)'\'')' -- \
-	  lib/API/OxdClientSocket.pm blib/lib/API/OxdClientSocket.pm \
-	  lib/API/GetUserInfo.pm blib/lib/API/GetUserInfo.pm \
-	  lib/API/OxdClient.pm blib/lib/API/OxdClient.pm \
-	  lib/API/OxdConfig.pm blib/lib/API/OxdConfig.pm \
-	  lib/API/OxdRegister.pm blib/lib/API/OxdRegister.pm \
-	  lib/API/OxdLogout.pm blib/lib/API/OxdLogout.pm \
 	  lib/API/GetAuthorizationUrl.pm blib/lib/API/GetAuthorizationUrl.pm \
-	  lib/API/UpdateRegistration.pm blib/lib/API/UpdateRegistration.pm \
+	  lib/API/OxdClient.pm blib/lib/API/OxdClient.pm \
+	  lib/API/OxdLogout.pm blib/lib/API/OxdLogout.pm \
+	  lib/API/OxdClientSocket.pm blib/lib/API/OxdClientSocket.pm \
 	  lib/API/GetTokenByCode.pm blib/lib/API/GetTokenByCode.pm \
-	  lib/oxdPerl.pm blib/lib/oxdPerl.pm 
+	  lib/API/UpdateRegistration.pm blib/lib/API/UpdateRegistration.pm \
+	  lib/API/OxdRegister.pm blib/lib/API/OxdRegister.pm \
+	  lib/API/OxdConfig.pm blib/lib/API/OxdConfig.pm \
+	  lib/oxdPerl.pm blib/lib/oxdPerl.pm \
+	  lib/API/GetUserInfo.pm blib/lib/API/GetUserInfo.pm 
 	$(NOECHO) $(TOUCH) pm_to_blib
 
 

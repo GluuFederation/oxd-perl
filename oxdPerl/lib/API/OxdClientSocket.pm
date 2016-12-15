@@ -12,6 +12,9 @@
 
 
 package OxdClientSocket;	# This is the &quot;Class&quot;
+
+    use vars qw($VERSION);
+    $VERSION = '0.01';
 	# makes all attributes available
 	use Time::Piece;
 	use lib './modules';

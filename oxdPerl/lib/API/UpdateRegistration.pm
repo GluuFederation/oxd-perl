@@ -19,6 +19,10 @@
 use JSON::PP;
 
 package UpdateRegistration;	
+    
+    use vars qw($VERSION);
+    $VERSION = '0.01'; 
+     
 	use API::OxdClient;
 	use base qw(OxdClient Class::Accessor);
 	#use base 'OxdClient';

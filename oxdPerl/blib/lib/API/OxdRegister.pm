@@ -1,9 +1,50 @@
 #!/usr/bin/perl
-# register.pm, a number as an object
+# OxdRegister.pm, a number as an object
+
+#
+# Gluu-oxd-library
+#
+# An open source application library for PHP
+#
+# This content is released under the MIT License (MIT)
+#
+# Copyright (c) 2015, Gluu inc, USA, Austin
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+# THE SOFTWARE.
+#
+# @package	Gluu-oxd-library
+# @version 2.4.4
+# @author	Ourdesignz
+# @author		gaurav.chhabra6785@gmail.com
+# @copyright	Copyright (c) 2015, Gluu inc federation (https://gluu.org/)
+# @license	http://opensource.org/licenses/MIT	MIT License
+# @link	https://gluu.org/
+# @since	Version 2.4.4
+# @filesource
+#/
 
 use JSON::PP;
 
 package OxdRegister;	# This is the &quot;Class&quot;
+    use vars qw($VERSION);
+    $VERSION = '0.01';
+    
 	use API::OxdClient;
 	use base qw(OxdClient Class::Accessor);
 	#use base 'OxdClient';

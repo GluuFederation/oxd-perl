@@ -51,6 +51,8 @@
 # @author		gaurav.chhabra6785@gmail.com
 #/
 package OxdConfig;
+use vars qw($VERSION);
+$VERSION = '0.01';
 use strict;
 use warnings;
 

@@ -7,6 +7,9 @@ package GetTokenByCode;	# This is the &quot;Class&quot;
 	use strict;
 	our @ISA = qw(OxdClient);    # inherits from OxdClient
 	
+	use vars qw($VERSION);
+    $VERSION = '0.01';
+	
 	sub new {
 		my $class = shift;
 		my $self = {

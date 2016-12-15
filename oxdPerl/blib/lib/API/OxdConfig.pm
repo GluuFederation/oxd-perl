@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-# Number.pm, a number as an object
+# OxdConfig.pm, a number as an object
 
 #
 # Gluu-oxd-library
@@ -30,8 +30,8 @@
 #
 # @package	Gluu-oxd-library
 # @version 2.4.4
-# @author	Vlad Karapetyan
-# @author		vlad.karapetyan.1988@mail.ru
+# @author	Ourdesignz
+# @author		gaurav.chhabra6785@gmail.com
 # @copyright	Copyright (c) 2015, Gluu inc federation (https://gluu.org/)
 # @license	http://opensource.org/licenses/MIT	MIT License
 # @link	https://gluu.org/
@@ -42,15 +42,17 @@
 #
 # Oxd RP config
 #
-# Class Oxd_RP_config, setting all configuration
+# Class OxdConfig, setting all configuration
 #
 # @package		Gluu-oxd-library
 # @subpackage	Libraries
 # @category	Base class for all protocols
-# @author		Vlad Karapetyan
-# @author		vlad.karapetyan.1988@mail.ru
+# @author		Ourdesignz
+# @author		gaurav.chhabra6785@gmail.com
 #/
 package OxdConfig;
+use vars qw($VERSION);
+$VERSION = '0.01';
 use strict;
 use warnings;
 

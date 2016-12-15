@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-# register.pm, a number as an object
+# UpdateRegistration.pm, a number as an object
 
 ##########################################
 # Oxd client update site registration class
@@ -19,6 +19,10 @@
 use JSON::PP;
 
 package UpdateRegistration;	
+    
+    use vars qw($VERSION);
+    $VERSION = '0.01'; 
+     
 	use API::OxdClient;
 	use base qw(OxdClient Class::Accessor);
 	#use base 'OxdClient';

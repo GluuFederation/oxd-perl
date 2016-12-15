@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-# register.pm, a number as an object
+# GetAuthorizationUrl.pm, a number as an object
 
 ##########################################
 # Oxd client update site registration class
@@ -24,6 +24,9 @@ package GetAuthorizationUrl;
 	#use base 'OxdClient';
 	use strict;
 	our @ISA = qw(OxdClient);    # inherits from OxdClient
+	
+	use vars qw($VERSION);
+    $VERSION = '0.01';
 	
 	sub new {
 		my $class = shift;

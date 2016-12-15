@@ -1,11 +1,14 @@
 #!/usr/bin/perl
-# GetTokenByCode.pm, a number as an object
+# GetUserInfo.pm, a number as an object
 
 package GetUserInfo;	# This is the &quot;Class&quot;
     use API::OxdClient;
 	use base qw(OxdClient Class::Accessor);
 	use strict;
 	our @ISA = qw(OxdClient);    # inherits from OxdClient
+	
+	use vars qw($VERSION);
+    $VERSION = '0.01';
 	
 	sub new {
 		my $class = shift;
