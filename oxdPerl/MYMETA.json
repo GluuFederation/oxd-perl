@@ -16,17 +16,12 @@
    "prereqs" : {
       "build" : {
          "requires" : {
-            "ExtUtils::MakeMaker" : "0"
+            "Test::More" : "0"
          }
       },
       "configure" : {
          "requires" : {
             "Module::Build" : "0"
-         }
-      },
-      "runtime" : {
-         "requires" : {
-            "Test::More" : "0"
          }
       }
    },

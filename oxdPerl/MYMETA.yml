@@ -3,7 +3,7 @@ abstract: 'The great new oxdPerl!'
 author:
   - 'Gaurav Chhabra <gaurav.chhabra6785@gmail.com>'
 build_requires:
-  ExtUtils::MakeMaker: 0
+  Test::More: 0
 configure_requires:
   Module::Build: 0
 dynamic_config: 0
@@ -17,6 +17,4 @@ provides:
   oxdPerl:
     file: lib/oxdPerl.pm
     version: 0.01
-requires:
-  Test::More: 0
 version: 0.01

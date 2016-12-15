@@ -1,5 +1,4 @@
-# oxd-perl
-oxd-perl is a client library for the Gluu oxd server implemented in JAVA. Using it you can integrate oxd server in your perl applications. For information about oxd, visit http://oxd.gluu.org
+# oxdPerl
 
 The README is used to introduce the module and provide instructions on
 how to install the module, any machine dependencies it may have (for
@@ -18,11 +17,11 @@ fixes for the module are worth downloading.
 To install this module, run the following commands on following path:
     
     Path : /var/www/html/oxd-perl/oxdPerl/
-
-	perl Makefile.PL
-	make
-	make test
-	make install
+    
+	perl Build.PL
+	./Build
+	./Build test
+	./Build install
 
 SUPPORT AND DOCUMENTATION
 
@@ -48,7 +47,7 @@ You can also look for information at:
 
 LICENSE AND COPYRIGHT
 
-Copyright (C) 2016 Ourdesignz
+Copyright (C) 2016 Gaurav Chhabra
 
 This program is free software; you can redistribute it and/or modify it
 under the terms of the the Artistic License (2.0). You may obtain a
