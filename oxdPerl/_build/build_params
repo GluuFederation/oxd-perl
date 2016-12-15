@@ -1,0 +1,120 @@
+do{ my $x = [
+       {
+         'ARGV' => []
+       },
+       {},
+       {
+         'build_elements' => [
+                               'PL',
+                               'support',
+                               'pm',
+                               'xs',
+                               'share_dir',
+                               'pod',
+                               'script'
+                             ],
+         'build_requires' => {
+                               'Test::More' => 0
+                             },
+         'magic_number' => undef,
+         'dist_version' => '0.01',
+         'destdir' => undef,
+         'cpan_client' => 'cpan',
+         'bindoc_dirs' => [
+                            'blib/script'
+                          ],
+         'mymetafile2' => 'MYMETA.json',
+         'create_readme' => undef,
+         'blib' => 'blib',
+         'PL_files' => undef,
+         'install_base' => undef,
+         'dynamic_config' => 1,
+         'dist_version_from' => 'lib/oxdPerl.pm',
+         'license' => 'unknown',
+         'test_files' => undef,
+         'mymetafile' => 'MYMETA.yml',
+         'sign' => undef,
+         'prefix_relpaths' => {},
+         'debugger' => undef,
+         'extra_compiler_flags' => [],
+         '_added_to_INC' => [],
+         'meta_merge' => {},
+         'share_dir' => undef,
+         'verbose' => undef,
+         'config_dir' => '_build',
+         'base_dir' => '/var/www/Projects/perl/oxdPerl',
+         'original_prefix' => {},
+         'use_rcfile' => 1,
+         'dist_abstract' => undef,
+         'pm_files' => undef,
+         'pod_files' => undef,
+         'auto_configure_requires' => 1,
+         'get_options' => {},
+         'xs_files' => undef,
+         'prereq_action_types' => [
+                                    'requires',
+                                    'build_requires',
+                                    'conflicts',
+                                    'recommends'
+                                  ],
+         'install_path' => {},
+         'prefix' => undef,
+         'meta_add' => {},
+         'dist_author' => [
+                            'Gaurav Chhabra <gaurav.chhabra6785@gmail.com>'
+                          ],
+         'metafile2' => 'META.json',
+         'build_script' => 'Build',
+         'module_name' => 'oxdPerl',
+         'quiet' => undef,
+         'has_config_data' => undef,
+         'build_class' => 'Module::Build',
+         'config' => undef,
+         'release_status' => 'stable',
+         'tap_harness_args' => {},
+         'conflicts' => {},
+         'scripts' => undef,
+         'install_base_relpaths' => {},
+         'dist_suffix' => undef,
+         'bundle_inc' => [],
+         'create_license' => undef,
+         'libdoc_dirs' => [
+                            'blib/lib',
+                            'blib/arch'
+                          ],
+         'c_source' => undef,
+         'program_name' => undef,
+         'needs_compiler' => '',
+         'extra_linker_flags' => [],
+         'dist_name' => 'oxdPerl',
+         'bundle_inc_preload' => [],
+         'configure_requires' => {
+                                   'Module::Build' => 0
+                                 },
+         'installdirs' => 'site',
+         'recommends' => {},
+         'autosplit' => undef,
+         'include_dirs' => [],
+         'recursive_test_files' => undef,
+         'orig_dir' => '/var/www/Projects/perl/oxdPerl',
+         'requires' => {},
+         'install_sets' => {},
+         'use_tap_harness' => 0,
+         'create_makefile_pl' => 'traditional',
+         'script_files' => undef,
+         'create_packlist' => 1,
+         'test_file_exts' => [
+                               '.t'
+                             ],
+         'metafile' => 'META.yml',
+         'pollute' => undef,
+         'debug' => undef,
+         'build_bat' => 0,
+         'recurse_into' => [],
+         'mb_version' => '0.4003',
+         'html_css' => '',
+         'perl' => '/usr/bin/perl',
+         'allow_mb_mismatch' => 0
+       }
+     ];
+$x; }

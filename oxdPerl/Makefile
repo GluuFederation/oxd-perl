@@ -11,19 +11,15 @@
 
 #   MakeMaker Parameters:
 
-#     ABSTRACT_FROM => q[lib/oxdPerl.pm]
-#     AUTHOR => [q[Ourdesignz <gaurav.chhabra6785@gmail.com>]]
-#     BUILD_REQUIRES => { Test::More=>q[0] }
-#     CONFIGURE_REQUIRES => { ExtUtils::MakeMaker=>q[0] }
-#     LICENSE => q[Artistic_2_0]
-#     MIN_PERL_VERSION => q[5.006]
+#     BUILD_REQUIRES => {  }
+#     CONFIGURE_REQUIRES => {  }
+#     EXE_FILES => []
+#     INSTALLDIRS => q[site]
 #     NAME => q[oxdPerl]
 #     PL_FILES => {  }
 #     PREREQ_PM => { Test::More=>q[0] }
 #     TEST_REQUIRES => {  }
 #     VERSION_FROM => q[lib/oxdPerl.pm]
-#     clean => { FILES=>q[oxdPerl-*] }
-#     dist => { COMPRESS=>q[gzip -9f], SUFFIX=>q[gz] }
 
 # --- MakeMaker post_initialize section:
 
@@ -200,24 +196,24 @@ TO_INST_PM = lib/API/GetAuthorizationUrl.pm \
 	lib/API/UpdateRegistration.pm \
 	lib/oxdPerl.pm
 
-PM_TO_BLIB = lib/API/GetAuthorizationUrl.pm \
-	blib/lib/API/GetAuthorizationUrl.pm \
+PM_TO_BLIB = lib/API/OxdRegister.pm \
+	blib/lib/API/OxdRegister.pm \
 	lib/API/OxdClient.pm \
 	blib/lib/API/OxdClient.pm \
-	lib/API/OxdLogout.pm \
-	blib/lib/API/OxdLogout.pm \
-	lib/API/OxdClientSocket.pm \
-	blib/lib/API/OxdClientSocket.pm \
-	lib/API/GetTokenByCode.pm \
-	blib/lib/API/GetTokenByCode.pm \
-	lib/API/UpdateRegistration.pm \
-	blib/lib/API/UpdateRegistration.pm \
-	lib/API/OxdRegister.pm \
-	blib/lib/API/OxdRegister.pm \
-	lib/API/OxdConfig.pm \
-	blib/lib/API/OxdConfig.pm \
 	lib/oxdPerl.pm \
 	blib/lib/oxdPerl.pm \
+	lib/API/GetTokenByCode.pm \
+	blib/lib/API/GetTokenByCode.pm \
+	lib/API/GetAuthorizationUrl.pm \
+	blib/lib/API/GetAuthorizationUrl.pm \
+	lib/API/UpdateRegistration.pm \
+	blib/lib/API/UpdateRegistration.pm \
+	lib/API/OxdClientSocket.pm \
+	blib/lib/API/OxdClientSocket.pm \
+	lib/API/OxdLogout.pm \
+	blib/lib/API/OxdLogout.pm \
+	lib/API/OxdConfig.pm \
+	blib/lib/API/OxdConfig.pm \
 	lib/API/GetUserInfo.pm \
 	blib/lib/API/GetUserInfo.pm
 
@@ -277,8 +273,8 @@ TAR = tar
 TARFLAGS = cvf
 ZIP = zip
 ZIPFLAGS = -r
-COMPRESS = gzip -9f
-SUFFIX = gz
+COMPRESS = gzip --best
+SUFFIX = .gz
 SHAR = shar
 PREOP = $(NOECHO) $(NOOP)
 POSTOP = $(NOECHO) $(NOOP)
@@ -442,11 +438,11 @@ POD2MAN = $(POD2MAN_EXE)
 
 
 manifypods : pure_all  \
-	lib/API/OxdConfig.pm \
-	lib/oxdPerl.pm
+	lib/oxdPerl.pm \
+	lib/API/OxdConfig.pm
 	$(NOECHO) $(POD2MAN) --section=$(MAN3EXT) --perm_rw=$(PERM_RW) \
-	  lib/API/OxdConfig.pm $(INST_MAN3DIR)/API::OxdConfig.$(MAN3EXT) \
-	  lib/oxdPerl.pm $(INST_MAN3DIR)/oxdPerl.$(MAN3EXT) 
+	  lib/oxdPerl.pm $(INST_MAN3DIR)/oxdPerl.$(MAN3EXT) \
+	  lib/API/OxdConfig.pm $(INST_MAN3DIR)/API::OxdConfig.$(MAN3EXT) 
 
 
 
@@ -473,24 +469,24 @@ clean_subdirs :
 
 clean :: clean_subdirs
 	- $(RM_F) \
-	  perl$(EXE_EXT) lib$(BASEEXT).def \
-	  $(INST_ARCHAUTODIR)/extralibs.all *$(LIB_EXT) \
-	  pm_to_blib.ts core.[0-9][0-9][0-9][0-9] \
-	  core.[0-9] so_locations \
-	  perlmain.c blibdirs.ts \
-	  $(BASEEXT).def core \
-	  $(BOOTSTRAP) perl \
-	  core.[0-9][0-9][0-9][0-9][0-9] *perl.core \
-	  core.[0-9][0-9][0-9] *$(OBJ_EXT) \
-	  $(MAKE_APERL_FILE) core.*perl.*.? \
-	  MYMETA.json pm_to_blib \
-	  $(BASEEXT).x perl.exe \
-	  $(BASEEXT).bso MYMETA.yml \
-	  $(BASEEXT).exp mon.out \
-	  core.[0-9][0-9] $(INST_ARCHAUTODIR)/extralibs.ld \
-	  tmon.out 
+	  MYMETA.yml mon.out \
+	  so_locations pm_to_blib.ts \
+	  $(BASEEXT).def core.[0-9][0-9][0-9] \
+	  *$(OBJ_EXT) perl$(EXE_EXT) \
+	  $(BASEEXT).x perl \
+	  perl.exe blibdirs.ts \
+	  pm_to_blib lib$(BASEEXT).def \
+	  core $(INST_ARCHAUTODIR)/extralibs.ld \
+	  $(BOOTSTRAP) MYMETA.json \
+	  core.[0-9][0-9] core.*perl.*.? \
+	  *$(LIB_EXT) core.[0-9] \
+	  $(MAKE_APERL_FILE) *perl.core \
+	  tmon.out $(BASEEXT).exp \
+	  core.[0-9][0-9][0-9][0-9] core.[0-9][0-9][0-9][0-9][0-9] \
+	  $(INST_ARCHAUTODIR)/extralibs.all perlmain.c \
+	  $(BASEEXT).bso 
 	- $(RM_RF) \
-	  blib oxdPerl-* 
+	  blib 
 	- $(MV) $(FIRST_MAKEFILE) $(MAKEFILE_OLD) $(DEV_NULL)
 
 
@@ -503,7 +499,7 @@ realclean_subdirs :
 # Delete temporary files (via clean) and also delete dist files
 realclean purge ::  clean realclean_subdirs
 	- $(RM_F) \
-	  $(FIRST_MAKEFILE) $(MAKEFILE_OLD) 
+	  $(MAKEFILE_OLD) $(FIRST_MAKEFILE) 
 	- $(RM_RF) \
 	  $(DISTVNAME) 
 
@@ -512,11 +508,11 @@ realclean purge ::  clean realclean_subdirs
 metafile : create_distdir
 	$(NOECHO) $(ECHO) Generating META.yml
 	$(NOECHO) $(ECHO) '---' > META_new.yml
-	$(NOECHO) $(ECHO) 'abstract: '\''The great new oxdPerl!'\''' >> META_new.yml
+	$(NOECHO) $(ECHO) 'abstract: unknown' >> META_new.yml
 	$(NOECHO) $(ECHO) 'author:' >> META_new.yml
-	$(NOECHO) $(ECHO) '  - '\''Ourdesignz <gaurav.chhabra6785@gmail.com>'\''' >> META_new.yml
+	$(NOECHO) $(ECHO) '  - unknown' >> META_new.yml
 	$(NOECHO) $(ECHO) 'build_requires:' >> META_new.yml
-	$(NOECHO) $(ECHO) '  Test::More: 0' >> META_new.yml
+	$(NOECHO) $(ECHO) '  ExtUtils::MakeMaker: 0' >> META_new.yml
 	$(NOECHO) $(ECHO) 'configure_requires:' >> META_new.yml
 	$(NOECHO) $(ECHO) '  ExtUtils::MakeMaker: 0' >> META_new.yml
 	$(NOECHO) $(ECHO) 'dynamic_config: 1' >> META_new.yml
@@ -531,14 +527,14 @@ metafile : create_distdir
 	$(NOECHO) $(ECHO) '    - t' >> META_new.yml
 	$(NOECHO) $(ECHO) '    - inc' >> META_new.yml
 	$(NOECHO) $(ECHO) 'requires:' >> META_new.yml
-	$(NOECHO) $(ECHO) '  perl: 5.006' >> META_new.yml
+	$(NOECHO) $(ECHO) '  Test::More: 0' >> META_new.yml
 	$(NOECHO) $(ECHO) 'version: 0.01' >> META_new.yml
 	-$(NOECHO) $(MV) META_new.yml $(DISTVNAME)/META.yml
 	$(NOECHO) $(ECHO) Generating META.json
 	$(NOECHO) $(ECHO) '{' > META_new.json
-	$(NOECHO) $(ECHO) '   "abstract" : "The great new oxdPerl!",' >> META_new.json
+	$(NOECHO) $(ECHO) '   "abstract" : "unknown",' >> META_new.json
 	$(NOECHO) $(ECHO) '   "author" : [' >> META_new.json
-	$(NOECHO) $(ECHO) '      "Ourdesignz <gaurav.chhabra6785@gmail.com>"' >> META_new.json
+	$(NOECHO) $(ECHO) '      "unknown"' >> META_new.json
 	$(NOECHO) $(ECHO) '   ],' >> META_new.json
 	$(NOECHO) $(ECHO) '   "dynamic_config" : 1,' >> META_new.json
 	$(NOECHO) $(ECHO) '   "generated_by" : "ExtUtils::MakeMaker version 6.66, CPAN::Meta::Converter version 2.133380",' >> META_new.json
@@ -559,7 +555,7 @@ metafile : create_distdir
 	$(NOECHO) $(ECHO) '   "prereqs" : {' >> META_new.json
 	$(NOECHO) $(ECHO) '      "build" : {' >> META_new.json
 	$(NOECHO) $(ECHO) '         "requires" : {' >> META_new.json
-	$(NOECHO) $(ECHO) '            "Test::More" : "0"' >> META_new.json
+	$(NOECHO) $(ECHO) '            "ExtUtils::MakeMaker" : "0"' >> META_new.json
 	$(NOECHO) $(ECHO) '         }' >> META_new.json
 	$(NOECHO) $(ECHO) '      },' >> META_new.json
 	$(NOECHO) $(ECHO) '      "configure" : {' >> META_new.json
@@ -569,7 +565,7 @@ metafile : create_distdir
 	$(NOECHO) $(ECHO) '      },' >> META_new.json
 	$(NOECHO) $(ECHO) '      "runtime" : {' >> META_new.json
 	$(NOECHO) $(ECHO) '         "requires" : {' >> META_new.json
-	$(NOECHO) $(ECHO) '            "perl" : "5.006"' >> META_new.json
+	$(NOECHO) $(ECHO) '            "Test::More" : "0"' >> META_new.json
 	$(NOECHO) $(ECHO) '         }' >> META_new.json
 	$(NOECHO) $(ECHO) '      }' >> META_new.json
 	$(NOECHO) $(ECHO) '   },' >> META_new.json
@@ -834,7 +830,6 @@ subdirs-test ::
 
 test_dynamic :: pure_all
 	PERL_DL_NONLAZY=1 $(FULLPERLRUN) "-MExtUtils::Command::MM" "-e" "test_harness($(TEST_VERBOSE), '$(INST_LIB)', '$(INST_ARCHLIB)')" $(TEST_FILES)
-	PERL_DL_NONLAZY=1 $(FULLPERLRUN) "-I$(INST_LIB)" "-I$(INST_ARCHLIB)" $(TEST_FILE)
 
 testdb_dynamic :: pure_all
 	PERL_DL_NONLAZY=1 $(FULLPERLRUN) $(TESTDB_SW) "-I$(INST_LIB)" "-I$(INST_ARCHLIB)" $(TEST_FILE)
@@ -849,10 +844,10 @@ testdb_static :: testdb_dynamic
 # Creates a PPD (Perl Package Description) for a binary distribution.
 ppd :
 	$(NOECHO) $(ECHO) '<SOFTPKG NAME="$(DISTNAME)" VERSION="$(VERSION)">' > $(DISTNAME).ppd
-	$(NOECHO) $(ECHO) '    <ABSTRACT>The great new oxdPerl!</ABSTRACT>' >> $(DISTNAME).ppd
-	$(NOECHO) $(ECHO) '    <AUTHOR>Ourdesignz &lt;gaurav.chhabra6785@gmail.com&gt;</AUTHOR>' >> $(DISTNAME).ppd
+	$(NOECHO) $(ECHO) '    <ABSTRACT></ABSTRACT>' >> $(DISTNAME).ppd
+	$(NOECHO) $(ECHO) '    <AUTHOR></AUTHOR>' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '    <IMPLEMENTATION>' >> $(DISTNAME).ppd
-	$(NOECHO) $(ECHO) '        <PERLCORE VERSION="5,006,0,0" />' >> $(DISTNAME).ppd
+	$(NOECHO) $(ECHO) '        <REQUIRE NAME="Test::More" />' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '        <ARCHITECTURE NAME="x86_64-linux-gnu-thread-multi-5.18" />' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '        <CODEBASE HREF="" />' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '    </IMPLEMENTATION>' >> $(DISTNAME).ppd
@@ -863,15 +858,15 @@ ppd :
 
 pm_to_blib : $(FIRST_MAKEFILE) $(TO_INST_PM)
 	$(NOECHO) $(ABSPERLRUN) -MExtUtils::Install -e 'pm_to_blib({@ARGV}, '\''$(INST_LIB)/auto'\'', q[$(PM_FILTER)], '\''$(PERM_DIR)'\'')' -- \
-	  lib/API/GetAuthorizationUrl.pm blib/lib/API/GetAuthorizationUrl.pm \
-	  lib/API/OxdClient.pm blib/lib/API/OxdClient.pm \
-	  lib/API/OxdLogout.pm blib/lib/API/OxdLogout.pm \
-	  lib/API/OxdClientSocket.pm blib/lib/API/OxdClientSocket.pm \
-	  lib/API/GetTokenByCode.pm blib/lib/API/GetTokenByCode.pm \
-	  lib/API/UpdateRegistration.pm blib/lib/API/UpdateRegistration.pm \
 	  lib/API/OxdRegister.pm blib/lib/API/OxdRegister.pm \
-	  lib/API/OxdConfig.pm blib/lib/API/OxdConfig.pm \
+	  lib/API/OxdClient.pm blib/lib/API/OxdClient.pm \
 	  lib/oxdPerl.pm blib/lib/oxdPerl.pm \
+	  lib/API/GetTokenByCode.pm blib/lib/API/GetTokenByCode.pm \
+	  lib/API/GetAuthorizationUrl.pm blib/lib/API/GetAuthorizationUrl.pm \
+	  lib/API/UpdateRegistration.pm blib/lib/API/UpdateRegistration.pm \
+	  lib/API/OxdClientSocket.pm blib/lib/API/OxdClientSocket.pm \
+	  lib/API/OxdLogout.pm blib/lib/API/OxdLogout.pm \
+	  lib/API/OxdConfig.pm blib/lib/API/OxdConfig.pm \
 	  lib/API/GetUserInfo.pm blib/lib/API/GetUserInfo.pm 
 	$(NOECHO) $(TOUCH) pm_to_blib
 

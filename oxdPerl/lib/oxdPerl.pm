@@ -12,7 +12,6 @@ use API::GetTokenByCode;
 use API::GetUserInfo;
 use API::OxdLogout;
 
-
 =head1 NAME
 
 oxdPerl - The great new oxdPerl!
@@ -60,7 +59,7 @@ sub function2 {
 
 =head1 AUTHOR
 
-Ourdesignz, C<< <gaurav.chhabra6785 at gmail.com> >>
+Gaurav Chhabra, C<< <gaurav.chhabra6785 at gmail.com> >>
 
 =head1 BUGS
 
@@ -106,7 +105,7 @@ L<http://search.cpan.org/dist/oxdPerl/>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright 2016 Ourdesignz.
+Copyright 2016 Gaurav Chhabra.
 
 This program is free software; you can redistribute it and/or modify it
 under the terms of the the Artistic License (2.0). You may obtain a
