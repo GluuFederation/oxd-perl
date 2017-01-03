@@ -1,0 +1,6 @@
+do{ my $x = {
+       'blib' => 1,
+       'oxdPerl-*' => 1,
+       'oxdPerl-0.01' => 1
+     };
+$x; }
