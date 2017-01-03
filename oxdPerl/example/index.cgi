@@ -212,7 +212,7 @@ sub oxd_authentication{
 	if($session->param('oxd_id') eq ""){
 		my $register_site = new OxdRegister( );
 		
-		$register_site->setRequestOpHost($gluu_server_url);
+ 		$register_site->setRequestOpHost($gluu_server_url);
 		$register_site->setRequestAcrValues($acrValues);
 		$register_site->setRequestAuthorizationRedirectUri($authorizationRedirectUrl);
 		$register_site->setRequestPostLogoutRedirectUri($postLogoutRedirectUrl);

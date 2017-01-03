@@ -11,6 +11,11 @@ use API::GetAuthorizationUrl;
 use API::GetTokenByCode;
 use API::GetUserInfo;
 use API::OxdLogout;
+use API::UmaRsProtect;
+use API::UmaRpAuthorizeRpt;
+use API::UmaRpGetGat;
+use API::UmaRpGetRpt;
+use API::UmaRsCheckAccess;
 
 =head1 NAME
 

@@ -99,6 +99,7 @@ package OxdClientSocket;	# This is the &quot;Class&quot;
     # @return void
     sub error_message{
 		my ($self, $error) = @_;
+		print '<div class="alert alert-danger"> ' . $error.'</div>';
         exit($error);
     }
     

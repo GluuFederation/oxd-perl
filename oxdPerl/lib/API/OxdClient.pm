@@ -3,7 +3,6 @@
 
 package Attribute::Abstract;
 
-
 package OxdClient;	# This is the &quot;Class&quot;
     
     use vars qw($VERSION);
@@ -96,13 +95,14 @@ package OxdClient;	# This is the &quot;Class&quot;
         }
 		
         $self->setParams();
-      
+        
       
 		my $json_array = $self->getData();
 		my $json = JSON::PP->new;
 		
         my $jsondata = $json->encode($json_array);
        
+        
         if(!$self->is_JSON($jsondata)){
             $self->log("Sending parameters must be JSON.",'Exiting process.');
             $self->error_message('Sending parameters must be JSON.');
@@ -123,7 +123,7 @@ package OxdClient;	# This is the &quot;Class&quot;
 		my $char_count = substr($response_json, 0, 4);
         $response_json =~ s/$char_count//g;
         $self->{_response_json} = $response_json if defined($response_json);
-
+        
         if ( $response_json) {
             my $object = JSON::PP->new->utf8->decode($response_json);
             #print $object->{data}->{oxd_id};
@@ -133,6 +133,7 @@ package OxdClient;	# This is the &quot;Class&quot;
                 $self->setResponseObject( $object );
             }
         } else {
+			print "I am here";
             $self->log("Response is empty...",'Exiting process.');
             $self->error_message('Response is empty...');
         }
