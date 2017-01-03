@@ -218,7 +218,6 @@ Navigate to perl app root:
 
 ```bash
 
-Copy example folder from oxdPerl directory and placed on root folder
 
 cd /var/www/html/oxd-perl/example
 
