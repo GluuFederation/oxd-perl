@@ -1,6 +1,0 @@
-do{ my $x = {
-       'oxdPerl-0.01' => 1,
-       'blib' => 1,
-       'oxdPerl-*' => 1
-     };
-$x; }
