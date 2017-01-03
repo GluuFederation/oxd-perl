@@ -1,0 +1,120 @@
+do{ my $x = [
+       {
+         'ARGV' => []
+       },
+       {},
+       {
+         'c_source' => undef,
+         'bindoc_dirs' => [
+                            'blib/script'
+                          ],
+         'config' => undef,
+         'recursive_test_files' => undef,
+         'metafile2' => 'META.json',
+         'build_requires' => {
+                               'Test::More' => 0
+                             },
+         'test_file_exts' => [
+                               '.t'
+                             ],
+         'build_script' => 'Build',
+         'use_rcfile' => 1,
+         'metafile' => 'META.yml',
+         'allow_mb_mismatch' => 0,
+         'installdirs' => 'site',
+         'mymetafile' => 'MYMETA.yml',
+         'dist_author' => [
+                            'Gaurav Chhabra <gaurav.chhabra6785@gmail.com>'
+                          ],
+         'prereq_action_types' => [
+                                    'requires',
+                                    'build_requires',
+                                    'conflicts',
+                                    'recommends'
+                                  ],
+         'bundle_inc_preload' => [],
+         'get_options' => {},
+         'dist_version' => '0.01',
+         'dist_name' => 'OxdPerlModule',
+         'destdir' => undef,
+         'script_files' => undef,
+         'create_packlist' => 1,
+         'release_status' => 'stable',
+         'license' => 'perl',
+         'has_config_data' => undef,
+         'html_css' => '',
+         'requires' => {},
+         'magic_number' => undef,
+         'verbose' => undef,
+         'auto_configure_requires' => 1,
+         'share_dir' => undef,
+         'pollute' => undef,
+         'dynamic_config' => 1,
+         'cpan_client' => 'cpan',
+         'extra_compiler_flags' => [],
+         'mymetafile2' => 'MYMETA.json',
+         'extra_linker_flags' => [],
+         'libdoc_dirs' => [
+                            'blib/lib',
+                            'blib/arch'
+                          ],
+         'install_base' => undef,
+         'quiet' => undef,
+         'base_dir' => '/var/www/html/oxd-perl/OxdPerlModule',
+         'config_dir' => '_build',
+         'autosplit' => undef,
+         'original_prefix' => {},
+         'orig_dir' => '/var/www/html/oxd-perl/OxdPerlModule',
+         'sign' => undef,
+         'create_makefile_pl' => 'traditional',
+         'include_dirs' => [],
+         'install_sets' => {},
+         'conflicts' => {},
+         'PL_files' => undef,
+         'build_elements' => [
+                               'PL',
+                               'support',
+                               'pm',
+                               'xs',
+                               'share_dir',
+                               'pod',
+                               'script'
+                             ],
+         'scripts' => undef,
+         'pod_files' => undef,
+         'configure_requires' => {
+                                   'Module::Build' => 0
+                                 },
+         'debugger' => undef,
+         'meta_add' => {},
+         'test_files' => undef,
+         'bundle_inc' => [],
+         'tap_harness_args' => {},
+         'xs_files' => undef,
+         'create_readme' => undef,
+         'meta_merge' => {},
+         'mb_version' => '0.4003',
+         'build_bat' => 0,
+         'recommends' => {},
+         'install_path' => {},
+         'debug' => undef,
+         'build_class' => 'Module::Build',
+         'blib' => 'blib',
+         'pm_files' => undef,
+         'dist_version_from' => 'lib/OxdPerlModule.pm',
+         'dist_suffix' => undef,
+         'program_name' => undef,
+         '_added_to_INC' => [],
+         'use_tap_harness' => 0,
+         'create_license' => undef,
+         'needs_compiler' => '',
+         'module_name' => 'OxdPerlModule',
+         'prefix_relpaths' => {},
+         'install_base_relpaths' => {},
+         'prefix' => undef,
+         'recurse_into' => [],
+         'dist_abstract' => undef,
+         'perl' => '/usr/bin/perl'
+       }
+     ];
+$x; }

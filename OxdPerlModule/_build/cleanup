@@ -1,0 +1,5 @@
+do{ my $x = {
+       'OxdPerlModule-*' => 1,
+       'OxdPerlModule-0.01' => 1
+     };
+$x; }

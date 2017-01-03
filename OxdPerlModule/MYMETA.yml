@@ -1,0 +1,24 @@
+---
+abstract: 'The great new OxdPerlModule!'
+author:
+  - 'Gaurav Chhabra <gaurav.chhabra6785@gmail.com>'
+build_requires:
+  ExtUtils::MakeMaker: 0
+configure_requires:
+  Module::Build: 0
+dynamic_config: 0
+generated_by: 'Module::Build version 0.4003, CPAN::Meta::Converter version 2.120921'
+license: perl
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+name: OxdPerlModule
+provides:
+  OxdPerlModule:
+    file: lib/OxdPerlModule.pm
+    version: 0.01
+requires:
+  Test::More: 0
+resources:
+  license: http://dev.perl.org/licenses/
+version: 0.01
