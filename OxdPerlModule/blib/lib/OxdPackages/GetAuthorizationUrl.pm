@@ -6,11 +6,11 @@
 #
 # Class is connecting to oXD-server via socket, and updating registered site data in gluu server.
 #
-# @package		Gluu-oxd-library
+# @package	Gluu-oxd-library
 # @subpackage	Libraries
-# @category	Relying Party (RP) and User Managed Access (UMA)
-# @author		Ourdesignz
-# @author		inderpal6785@gmail.com
+# @version	3.1.0
+# @author	Ourdesignz, Sobhan Panda
+# @author_email	inderpal6785@gmail.com, sobhan@centroxy.com
 # @see	        OxdClientSocket
 # @see	        OxdClient
 # @see	        OxdConfig
@@ -52,6 +52,9 @@ package GetAuthorizationUrl;
 			# @var string $request_prompt                           Hosted domain google OP parameter https://developers.google.com/identity/protocols/OpenIDConnect#hd-param
 			
 			_request_hd => shift,
+			
+			# @var string $request_protection_access_token		To protect the command with access token
+			_request_protection_access_token => shift,
 
 			
 			# It is authorization url to gluu server.
@@ -165,6 +168,22 @@ package GetAuthorizationUrl;
 		return $self->{_request_hd};
 	}
 
+    # @return array
+    sub getRequestProtectionAccessToken
+    {   
+		my( $self ) = @_;
+		return $self->{_request_protection_access_token};
+    }
+
+    
+    # @param array $request_protection_access_token
+    # @return void
+    sub setRequestProtectionAccessToken
+    {   
+		my ( $self, $request_protection_access_token ) = @_;
+		$self->{_request_protection_access_token} = $request_protection_access_token if defined($request_protection_access_token);
+		return $self->{_request_protection_access_token};
+	}
     
     # @return string
     
@@ -185,21 +204,32 @@ package GetAuthorizationUrl;
 		return $self->{_command};
     }
     
+    # Protocol command to oXD to http server
+    # @return void
+    
+    sub sethttpCommand
+    {
+        my ( $self, $request_hd ) = @_;
+		$self->{_httpcommand} = 'get-authorization-url';
+		return $self->{_httpcommand};
+    }
+    
     # Protocol parameter to oxd server
     # @return void
     
     sub setParams
-    {   
+    {
 		my ( $self, $params ) = @_;
         my $paramsArray = {
             "oxd_id" => $self->getRequestOxdId(),
             "scope" => $self->getRequestScope(),
             "acr_values" => $self->getRequestAcrValues(),
             "prompt" => $self->getRequestPrompt(),
-            "hd" => $self->getRequestHd()
+            "hd" => $self->getRequestHd(),
+            "protection_access_token"=> $self->getRequestProtectionAccessToken()
         };
         $self->{_params} = $paramsArray;
 		return $self->{_params};
-    }	
+    }
 
 1;		# this 1; is neccessary for our class to work

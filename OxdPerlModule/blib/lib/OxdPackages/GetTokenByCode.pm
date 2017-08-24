@@ -1,6 +1,45 @@
 #!/usr/bin/perl
 # GetTokenByCode.pm, a number as an object
 
+#
+# Gluu-oxd-library
+#
+# An open source application library for Perl
+#
+# This content is released under the MIT License (MIT)
+#
+# Copyright (c) 2017, Gluu inc, USA, Austin
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+# THE SOFTWARE.
+#
+# @package	Gluu-oxd-library
+# @version	3.1.0
+# @author	Sobhan Panda
+# @author_email	sobhan@centroxy.com
+# @copyright	Copyright (c) 2017, Gluu inc federation (https://gluu.org/)
+# @license	http://opensource.org/licenses/MIT	MIT License
+# @link		https://gluu.org/
+# @since	Version 3.1.0
+# @filesource
+#/
+
+
 package GetTokenByCode;	# This is the &quot;Class&quot;
     use OxdPackages::OxdClient;
 	use base qw(OxdClient Class::Accessor);
@@ -26,6 +65,9 @@ package GetTokenByCode;	# This is the &quot;Class&quot;
 			 
 			_request_state => shift,
 			
+			# @var string $request_protection_access_token		To protect the command with access token
+			_request_protection_access_token => shift,
+			
 			# Response parameter from oxd-server
 			# It need to using for get_user_info and logout classes
 			#
@@ -50,9 +92,16 @@ package GetTokenByCode;	# This is the &quot;Class&quot;
 			# Response parameter from oxd-server
 			# Showing user claimses and data
 			#
-			# @var string $response_expires_in
+			# @var string $response_id_token_claims
 			 
 			_response_id_token_claims => shift,
+			
+			# Response parameter from oxd-server
+			# Showing user claimses and data
+			#
+			# @var string $response_refresh_token
+			 
+			_response_refresh_token => shift,
 
 		
 		};
@@ -145,6 +194,23 @@ package GetTokenByCode;	# This is the &quot;Class&quot;
 		return $self->{_request_code};
 	}
 
+    # @return array
+    sub getRequestProtectionAccessToken
+    {   
+		my( $self ) = @_;
+		return $self->{_request_protection_access_token};
+    }
+
+    
+    # @param array $request_protection_access_token
+    # @return void
+    sub setRequestProtectionAccessToken
+    {   
+		my ( $self, $request_protection_access_token ) = @_;
+		$self->{_request_protection_access_token} = $request_protection_access_token if defined($request_protection_access_token);
+		return $self->{_request_protection_access_token};
+	}
+
     
     # @return string
     
@@ -185,6 +251,16 @@ package GetTokenByCode;	# This is the &quot;Class&quot;
 		return $self->{_response_id_token_claims};
 	}
 
+
+    # @return string
+    
+    sub getResponseRefreshToken
+    {
+		my( $self ) = @_;
+		$self->{_response_refresh_token} = $self->getResponseData()->{refresh_token};
+		return $self->{_response_refresh_token};
+	}
+    
     
     # Protocol command to oxd server
     # @return void
@@ -195,17 +271,28 @@ package GetTokenByCode;	# This is the &quot;Class&quot;
 		$self->{_command} = 'get_tokens_by_code';
 		return $self->{_command};
 	}
+	
+    # Protocol command to oXD to http server
+    # @return void
+    
+    sub sethttpCommand
+    {
+		my ( $self, $httpCommand ) = @_;
+		$self->{_httpcommand} = 'get-tokens-by-code';
+		return $self->{_httpcommand};
+	}
     
     # Protocol parameter to oxd server
     # @return void
     
     sub setParams
-    {  
+    {
 		my ( $self, $params ) = @_;
         my $paramsArray = {
             "oxd_id" => $self->getRequestOxdId(),
             "code" => $self->getRequestCode(),
-            "state" => $self->getRequestState()
+            "state" => $self->getRequestState(),
+            "protection_access_token"=> $self->getRequestProtectionAccessToken()
         };
         #use Data::Dumper;
         #print Dumper( $paramsArray );

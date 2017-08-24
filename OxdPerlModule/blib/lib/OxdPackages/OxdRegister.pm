@@ -4,11 +4,11 @@
 #
 # Gluu-oxd-library
 #
-# An open source application library for PHP
+# An open source application library for Perl
 #
 # This content is released under the MIT License (MIT)
 #
-# Copyright (c) 2015, Gluu inc, USA, Austin
+# Copyright (c) 2017, Gluu inc, USA, Austin
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -29,13 +29,13 @@
 # THE SOFTWARE.
 #
 # @package	Gluu-oxd-library
-# @version 2.4.4
-# @author	Ourdesignz
-# @author		gaurav.chhabra6785@gmail.com
-# @copyright	Copyright (c) 2015, Gluu inc federation (https://gluu.org/)
+# @version 	3.1.0
+# @author	Ourdesignz, Sobhan Panda
+# @author_email	gaurav.chhabra6785@gmail.com, sobhan@centroxy.com
+# @copyright	Copyright (c) 2017, Gluu inc federation (https://gluu.org/)
 # @license	http://opensource.org/licenses/MIT	MIT License
-# @link	https://gluu.org/
-# @since	Version 2.4.4
+# @link		https://gluu.org/
+# @since	Version 3.1.0
 # @filesource
 #/
 
@@ -109,13 +109,19 @@ package OxdRegister;	# This is the &quot;Class&quot;
 			_request_client_request_uris => shift,
 			
 			# @var array _request_client_logout_uris
-			_request_client_logout_uris => shift,
+			_request_client_frontchannel_logout_uris => shift,
 			
 			# @var array _request_ui_locales
 			_request_ui_locales => shift,
 			
 			# @var array _request_claims_locales
 			_request_claims_locales => shift,
+			
+			# @var string _request_claims_redirect_uri
+			_request_claims_redirect_uri => shift,
+			
+			# @var array $request_protection_access_token          To protect the command with access token
+			_request_protection_access_token => shift,
 			
 			# Response parameter from oxd-server
 			# It is basic parameter for other protocols
@@ -190,18 +196,21 @@ package OxdRegister;	# This is the &quot;Class&quot;
 		return $self->{_request_op_host};
 	}
     
+    
     # @return array
-    sub getRequestClientLogoutUris{
+    sub getRequestClientFrontChannelLogoutUris
+    {
         my( $self ) = @_;
-		return $self->{_request_client_logout_uris};
+	return $self->{_request_client_frontchannel_logout_uris};
     }
 
     # @param array $request_client_logout_uris
     # @return void
-    sub setRequestClientLogoutUris{
-        my ( $self, $request_client_logout_uris ) = @_;
-		$self->{_request_client_logout_uris} = $request_client_logout_uris if defined($request_client_logout_uris);
-		return $self->{_request_client_logout_uris};
+    sub setRequestClientFrontChannelLogoutUris
+    {
+        my ( $self, $request_client_frontchannel_logout_uris ) = @_;
+	$self->{_request_client_frontchannel_logout_uris} = $request_client_frontchannel_logout_uris if defined($request_client_frontchannel_logout_uris);
+	return $self->{_request_client_frontchannel_logout_uris};
     }
 	
 	# @return array
@@ -373,6 +382,19 @@ package OxdRegister;	# This is the &quot;Class&quot;
 		$self->{_request_contacts} = $request_contacts if defined($request_contacts);
 		return $self->{_request_contacts};
     }
+    
+    # @return string
+    sub getRequestClaimsRedirectUri {
+        my( $self ) = @_;
+		return $self->{_request_claims_redirect_uri};
+    }
+
+    # @param string $request_claims_redirect_uri
+    sub setRequestClaimsRedirectUri {
+        my ( $self, $request_claims_redirect_uri ) = @_;
+		$self->{_request_claims_redirect_uri} = $request_claims_redirect_uri if defined($request_claims_redirect_uri);
+		return $self->{_request_claims_redirect_uri};
+    }
 
     # @return string
     sub getResponseOxdId{
@@ -413,6 +435,24 @@ package OxdRegister;	# This is the &quot;Class&quot;
 		$self->{_request_claims_locales} = $request_claims_locales if defined($request_claims_locales);
 		return $self->{_request_claims_locales};
     }
+    
+    
+    # @return array
+    sub getRequestProtectionAccessToken
+    {   
+		my( $self ) = @_;
+		return $self->{_request_protection_access_token};
+    }
+
+    
+    # @param array $request_request_protection_access_token
+    # @return void
+    sub setRequestProtectionAccessToken
+    {   
+		my ( $self, $request_protection_access_token ) = @_;
+		$self->{_request_protection_access_token} = $request_protection_access_token if defined($request_protection_access_token);
+		return $self->{_request_protection_access_token};
+	}
 
     # Protocol command to oxd server
     # @return void
@@ -422,6 +462,16 @@ package OxdRegister;	# This is the &quot;Class&quot;
 		$self->{_command} = 'register_site';
 		return $self->{_command};
 		#return $command;
+    }
+    
+    # Protocol command to oxd to http server
+    # @return void
+    sub sethttpCommand{
+		# my $command = 'register-site';
+        my ( $self, $httpCommand ) = @_;
+		$self->{_httpcommand} = 'register-site';
+		return $self->{_httpcommand};
+		#return $httpcommand;
     }
     
     # Protocol parameter to oxd server
@@ -443,13 +493,16 @@ package OxdRegister;	# This is the &quot;Class&quot;
             "client_jwks_uri" => $self->getRequestClientJwksUri(),
             "client_token_endpoint_auth_method" => $self->getRequestClientTokenEndpointAuthMethod(),
             "client_request_uris" => $self->getRequestClientRequestUris(),
-            "client_logout_uris"=> $self->getRequestClientLogoutUris(),
+            "client_frontchannel_logout_uris"=> $self->getRequestClientFrontChannelLogoutUris(),
             "client_sector_identifier_uri"=> $self->getRequestClientSectorIdentifierUri(),
             "contacts" => $self->getRequestContacts(),
             "ui_locales" => $self->getRequestUiLocales(),
             "claims_locales" => $self->getRequestClaimsLocales(),
-            "client_id"=> $self->getRequestClientId(),
-            "client_secret"=> $self->getRequestClientSecret()
+            "client_id" => $self->getRequestClientId(),
+            "client_secret" => $self->getRequestClientSecret(),
+            "protection_access_token"=> $self->getRequestProtectionAccessToken(),
+            "claims_redirect_uri" => $self->getRequestClaimsRedirectUri(),
+            "oxd_rp_programming_language" => 'perl'
         };
        
 		$self->{_params} = $paramsArray;

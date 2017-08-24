@@ -5,16 +5,18 @@ use strict;
 use warnings FATAL => 'all';
 use OxdPackages::OxdConfig;
 use OxdPackages::OxdRegister;
+use OxdPackages::OxdSetupClient;
+use OxdPackages::GetClientToken;
 use OxdPackages::UpdateRegistration;
 use OxdPackages::GetAuthorizationUrl;
 use OxdPackages::GetTokenByCode;
+use OxdPackages::GetAccessTokenByRefreshToken;
 use OxdPackages::GetUserInfo;
 use OxdPackages::OxdLogout;
 use OxdPackages::UmaRsProtect;
-use OxdPackages::UmaRpAuthorizeRpt;
-use OxdPackages::UmaRpGetGat;
 use OxdPackages::UmaRpGetRpt;
 use OxdPackages::UmaRsCheckAccess;
+use OxdPackages::UmaRpGetClaimsGatheringUrl;
 
 =head1 NAME
 
