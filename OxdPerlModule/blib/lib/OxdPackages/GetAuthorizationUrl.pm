@@ -53,6 +53,8 @@ package GetAuthorizationUrl;
 			
 			_request_hd => shift,
 			
+			_request_custom_params => shift,
+			
 			# @var string $request_protection_access_token		To protect the command with access token
 			_request_protection_access_token => shift,
 
@@ -148,7 +150,23 @@ package GetAuthorizationUrl;
 		$self->{_request_prompt} = $request_prompt if defined($request_prompt);
 		return $self->{_request_prompt};
 	}
-
+	
+    
+    
+    # @return array
+    sub getRequestCustomParams
+    {
+	    my( $self ) = @_;
+	    return $self->{_request_custom_params};
+    }
+    
+    sub setRequestCustomParams
+    {
+	    my ( $self, $request_custom_params ) = @_;
+	    $self->{_request_custom_params} = $request_custom_params if defined($request_custom_params);
+	    return $self->{_request_custom_params};
+    }
+    
     
     # @return string
     
@@ -225,7 +243,7 @@ package GetAuthorizationUrl;
             "scope" => $self->getRequestScope(),
             "acr_values" => $self->getRequestAcrValues(),
             "prompt" => $self->getRequestPrompt(),
-            "hd" => $self->getRequestHd(),
+            "custom_parameters" => $self->getRequestCustomParams(),
             "protection_access_token"=> $self->getRequestProtectionAccessToken()
         };
         $self->{_params} = $paramsArray;

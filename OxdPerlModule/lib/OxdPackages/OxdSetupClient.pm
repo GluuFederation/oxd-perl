@@ -212,14 +212,14 @@ package OxdSetupClient;	# This is the &quot;Class&quot;
 	}
     
     # @return array
-    sub getRequestClientFrontChannelLogoutUris{
+    sub getRequestClientLogoutUris{
         my( $self ) = @_;
 		return $self->{_request_client_frontchannel_logout_uris};
     }
 
     # @param array $request_client_logout_uris
     # @return void
-    sub setRequestClientFrontChannelLogoutUris{
+    sub setRequestClientLogoutUris{
         my ( $self, $request_client_frontchannel_logout_uris ) = @_;
 		$self->{_request_client_frontchannel_logout_uris} = $request_client_frontchannel_logout_uris if defined($request_client_frontchannel_logout_uris);
 		return $self->{_request_client_frontchannel_logout_uris};
@@ -530,7 +530,7 @@ package OxdSetupClient;	# This is the &quot;Class&quot;
             "client_jwks_uri" => $self->getRequestClientJwksUri(),
             "client_token_endpoint_auth_method" => $self->getRequestClientTokenEndpointAuthMethod(),
             "client_request_uris" => $self->getRequestClientRequestUris(),
-            "client_frontchannel_logout_uris"=> $self->getRequestClientFrontChannelLogoutUris(),
+            "client_frontchannel_logout_uris"=> $self->getRequestClientLogoutUris(),
             "client_sector_identifier_uri"=> $self->getRequestClientSectorIdentifierUri(),
             "contacts" => $self->getRequestContacts(),
             "ui_locales" => $self->getRequestUiLocales(),

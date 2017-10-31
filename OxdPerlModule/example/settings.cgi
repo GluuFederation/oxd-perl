@@ -64,6 +64,9 @@ Load_config_values();
 
 
 $session->param('oxd_id', $oxd_id);
+$session->param('client_id', $client_id);
+$session->param('client_secret', $client_secret);
+$session->param('op_host', $opHost);
 my $client_name = 'Sobhan_Centroxy';
 
 
@@ -94,9 +97,6 @@ if ($cgi->param("registerSite")) {
 print_Jquery_Validations();
 print_Styles();
 
-#$object->setRequestOpHost( "Mohd." );
-#my $firstName = $object->getRequestOpHost();
-#print $firstName;
 
 
 #################
@@ -270,7 +270,7 @@ select{
 }
 
 
-	    </style>';
+</style>';
     }
 
 
@@ -284,7 +284,6 @@ sub print_html_header {
 			<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 			<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 			<title>Gluu OpenID Setting</title>
-			<link rel="stylesheet" type="text/css" href="C:/xampp/htdocs/index.css">
 		    </head>';
 }
 
@@ -298,25 +297,7 @@ sub print_html_footer {
 					if($oxd_id) {
 					    print "$oxd_id";
 					}
-			# print '</div>
-				# </div>
-				# <br>
-				# <div class="row">
-				    # <div class="col-md-8">
-					# <label>client id:</label>';
-					# if($client_id) {
-					    # print "$client_id";
-					# }
-			# print '</div>
-				# </div>
-				# <br>
-				# <div class="row">
-				    # <div class="col-md-8">
-					# <label>client secret:</label>';
-					# if($client_secret) {
-					    # print "$client_secret";
-					# }
-					
+			
 			print "</div>
 				</div>
 			       <br>
@@ -354,14 +335,14 @@ sub print_html_form {
 		$gluu_server_url = "";
 	}
 	
-	print '<body class="container-fluid" >
+	print '<body class="container" >
 			<div id="bod_div">
-			    <h3>Register</h3>
+			    <h3>Setup Client</h3>
 			    <hr class="hr_modified">
 			   <form action="settings.cgi" method="post">
 				<input runat="server" type="hidden" name="connectionType" id="connectionType" value="'.$connectionType.'">
 			       <div class="row">
-				   <div class="col-md-6">
+				   <div class="col-md-8">
 				       <label>URI of the OpenID Connect Provider: </label>';
 				       
 				       if($oxd_id){
@@ -374,7 +355,7 @@ sub print_html_form {
 			       </div>
 			       <br>
 			       <div class="row">
-				   <div class="col-md-6">
+				   <div class="col-md-8">
 				       <label>Authorization Redirect URI: </label>';
 				       
 				       if ($oxd_id) {
@@ -386,7 +367,7 @@ sub print_html_form {
 				</div>
 			       <br>
 				<div class="row">
-				    <div class="col-md-6">
+				    <div class="col-md-8">
 					<label>Post logout URI: </label>';
 					
 					   if ($oxd_id) {
@@ -399,17 +380,17 @@ sub print_html_form {
 				</div>
 			       <br>
 			       <div class="row">
-				    <div class="col-md-6">
-					<label>Connection Type: </label>
+				    <div class="col-md-8">
+					<label>oxd Connection Type: </label>
 					<span class="ip_box">
-					    <input type="radio" name="rbConnectionType" id="local" value="local" checked class="rbConnectionType ip_box"> Local
-					    <input type="radio" name="rbConnectionType" id="web" value="web" class="rbConnectionType ip_box"> Web
+					    <input type="radio" name="rbConnectionType" id="local" value="local" checked class="rbConnectionType ip_box"> oxd server
+					    <input type="radio" name="rbConnectionType" id="web" value="web" class="rbConnectionType ip_box"> oxd https extension
 					    </span>';
 					   
 			print '</div>
 				</div>
 				<div runat="server" class="row" id="oxdPort">
-				    <div class="col-md-6">
+				    <div class="col-md-8">
 					<label>oxd port: </label>';
 					
 					if ($oxd_id) {
@@ -420,8 +401,8 @@ sub print_html_form {
 			print '</div>
 				</div>
 				<div runat="server" class="row" id="restService">
-				    <div class="col-md-6">
-					<label>Web address: </label>';
+				    <div class="col-md-8">
+					<label>oxd web address: </label>';
 					
 					if ($oxd_id) {
 						print '<input type="text" value="'.$restServiceUrl.'" size="50" class="ip_box" id="restServiceUrl" name="restServiceUrl" disabled>';
@@ -432,7 +413,7 @@ sub print_html_form {
 				</div>
 				<br>
 				<div class="row">
-				    <div class="col-md-6">
+				    <div class="col-md-8">
 					<label>Client Name: </label>';
 					
 					if ($oxd_id) {
@@ -447,7 +428,7 @@ sub print_html_form {
 				</div>
 			       <br>
 				<div class="row">
-				    <div class="col-md-6">
+				    <div class="col-md-8">
 					<label>Client Id: </label>';
 					   if ($oxd_id) {
 						print '<input type="text" value="'.$client_id.'" size="50" class="ip_box" id="clientId" name="clientId" disabled>';
@@ -459,7 +440,7 @@ sub print_html_form {
 				</div>
 			       <br>
 				<div class="row">
-				    <div class="col-md-6">
+				    <div class="col-md-8">
 					<label>Client Secret: </label>';
 					
 					   if ($oxd_id) {
@@ -475,12 +456,12 @@ sub print_html_form {
 			       <br>';
 
 			       if($oxd_id) {
-			print '<input type="submit" value="Register" class="btn btn-success" id="registerSite" name="registerSite" disabled>
+			print '<input type="submit" value="Create" class="btn btn-success" id="registerSite" name="registerSite" disabled>
 				    <input type="button" value="Edit" class="btn btn-primary" id="edit" onclick = "edit_enable()" >
 				    <input type="submit" value="Update" class="btn btn-primary" id="update" name="update" disabled>
 				    ';
 			       } else {
-			print '<input type="submit" value="Register" class="btn btn-success" id="registerSite" name="registerSite" >
+			print '<input type="submit" value="Create" class="btn btn-success" id="registerSite" name="registerSite" >
 				    <input type="button" value="Edit" class="btn btn-primary" id="edit" onclick = "edit_enable()" disabled>
 				    <input type="submit" value="Update" class="btn btn-primary" id="update" name="update" disabled>';
 				}
@@ -589,7 +570,7 @@ sub setup_client_req {
 	$setup_client->setRequestAcrValues($acrValues);
 	$setup_client->setRequestAuthorizationRedirectUri($auth_redirect_uri_ui);
 	$setup_client->setRequestPostLogoutRedirectUri($post_logout_uri_ui);
-	$setup_client->setRequestClientFrontChannelLogoutUris([$clientFrontChannelLogoutUrl]);
+	$setup_client->setRequestClientLogoutUris([$clientFrontChannelLogoutUrl]);
 	$setup_client->setRequestGrantTypes($grantType);
 	$setup_client->setRequestResponseTypes($responseType);
 	$setup_client->setRequestScope($scope);

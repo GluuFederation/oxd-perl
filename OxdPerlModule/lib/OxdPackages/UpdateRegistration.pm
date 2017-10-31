@@ -170,7 +170,7 @@ package UpdateRegistration;
 
 
     # @return array
-    sub getRequestClientFrontChannelLogoutUris
+    sub getRequestClientLogoutUris
     {
         my( $self ) = @_;
 	return $self->{_request_client_frontchannel_logout_uris};
@@ -178,7 +178,7 @@ package UpdateRegistration;
 
     # @param array $request_client_logout_uris
     # @return void
-    sub setRequestClientFrontChannelLogoutUris
+    sub setRequestClientLogoutUris
     {
         my ( $self, $request_client_frontchannel_logout_uris ) = @_;
 	$self->{_request_client_frontchannel_logout_uris} = $request_client_frontchannel_logout_uris if defined($request_client_frontchannel_logout_uris);
@@ -504,7 +504,7 @@ package UpdateRegistration;
             "oxd_id" => $self->getRequestOxdId(),
             "authorization_redirect_uri" => $self->getRequestAuthorizationRedirectUri(),
             "post_logout_redirect_uri" => $self->getRequestPostLogoutRedirectUri(),
-            "client_frontchannel_logout_uris"=> $self->getRequestClientFrontChannelLogoutUris(),
+            "client_frontchannel_logout_uris"=> $self->getRequestClientLogoutUris(),
             "response_types"=> $self->getRequestResponseTypes(),
             "grant_types" => $self->getRequestGrantTypes(),
             "scope" => $self->getRequestScope(),

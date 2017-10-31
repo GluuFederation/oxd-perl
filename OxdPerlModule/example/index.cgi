@@ -304,10 +304,15 @@ sub oxd_authentication{
 		$protection_access_token = getClientToken_authentication();
 	}
 	
+	## Custom parameters : 'key' => 'value'
+	%customParams = ('param1' => 'value1', 'param2' => 'value2');
+	
 	$get_authorization_url = new GetAuthorizationUrl( );
 	$get_authorization_url->setRequestOxdId($session->param('oxd_id'));
 	$get_authorization_url->setRequestScope($scope);
 	$get_authorization_url->setRequestAcrValues($acrValues);
+	$get_authorization_url->setRequestPrompt('login');
+	$get_authorization_url->setRequestCustomParams(\%customParams);
 	$get_authorization_url->setRequestProtectionAccessToken($protection_access_token);
 	$get_authorization_url->request();
     my $oxdurl = $get_authorization_url->getResponseAuthorizationUrl();

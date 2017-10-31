@@ -39,9 +39,9 @@ my $session = CGI::Session->new($cgi);
 # print the HTTP header and set the session ID cookie
 print $session->header();
 
-#my $oxd_id = "411c20bd-c398-49c5-8a7f-66280858cc6d";
-#$session->param('oxd_id', $oxd_id);
-print $session->param('oxd_id');
+print "oxd Id: ".$session->param('oxd_id');
+#print $session->param('client_id');
+#print $session->param('client_secret');
 
 ##################
 ## Main program ##
