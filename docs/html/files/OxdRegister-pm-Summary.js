@@ -1,0 +1,1 @@
+NDFramePage.OnPageTitleLoaded("File:OxdRegister.pm","OxdRegister.pm");NDSummary.OnSummaryLoaded("File:OxdRegister.pm",[["Perl","Perl"]],[["Functions","Function"],["Groups","Group"]],[[21,0,1,"Functions","Functions"],[22,0,0,"setParams","setParams"]]);
