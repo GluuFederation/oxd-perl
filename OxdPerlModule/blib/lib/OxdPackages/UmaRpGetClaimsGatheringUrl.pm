@@ -7,7 +7,7 @@
  #
  # This content is released under the MIT License (MIT)
  #
- # Copyright (c) 2017, Gluu inc, USA, Austin
+ # Copyright (c) 2018, Gluu inc, USA, Austin
  #
  # Permission is hereby granted, free of charge, to any person obtaining a copy
  # of this software and associated documentation files (the "Software"), to deal
@@ -28,13 +28,13 @@
  # THE SOFTWARE.
  #
  # @package		Gluu-oxd-library
- # @version		3.1.0
+ # @version		3.1.2
  # @author		Sobhan Panda
  # @author		sobhan@centroxy.com
- # @copyright		Copyright (c) 2017, Gluu inc federation (https://gluu.org/)
+ # @copyright		Copyright (c) 2018, Gluu inc federation (https://gluu.org/)
  # @license		http://opensource.org/licenses/MIT	MIT License
  # @link		https://gluu.org/
- # @since		Version 3.1.0
+ # @since		Version 3.1.2
  # @filesource
  #
  #/
@@ -69,7 +69,9 @@ use Data::Dumper;
 			# Gluu RP Token
 			# @var string $response_rpt
 			
-			_response_rpt => shift
+			_response_rpt => shift,
+			
+			_response_url => shift
 		};
 		# Print all the values just for clarification.
 		# print "First Name is $self->{_request_oxd_id}\n";
@@ -184,6 +186,16 @@ use Data::Dumper;
 		$self->{_response_rpt} = $self->getResponseData()->{rpt};
         return $self->{_response_rpt};
     }
+	
+	##
+    # @return string
+    #
+    sub getResponseUrl
+    {    
+		my( $self ) = @_;
+		$self->{_response_url} = $self->getResponseData()->{url};
+        return $self->{_response_url};
+    }
 
     ##
     # Protocol command to oxd server
@@ -205,9 +217,29 @@ use Data::Dumper;
         $self->{_httpcommand} = 'uma-rp-get-claims-gathering-url';
     }
 
-    ##
-    # Protocol parameter to oxd server
-    # @return void
+    # Method: setParams
+    # This method sets the parameters for uma_rp_get_claims_gathering_url command.
+    # This module uses `request` method of OxdClient module for sending request to oxd-server
+    # 
+    # Parameters:
+    #
+    #	string $oxd_id - (Required) oxd Id from Client registration
+    #
+    #	string $ticket - (Required) Ticket
+    #
+    #	string $claims_redirect_uri - (Required) Claims Redirect Uri
+    #
+    #	string $protection_access_token - Protection Acccess Token. OPTIONAL for `oxd-server` but REQUIRED for `oxd-https-extension`
+    #
+    # Returns:
+    #	void
+    #
+    # This module uses `getResponseObject` method of OxdClient module for getting response from oxd.
+    # 
+    # *Example response from getResponseObject:*
+    # --- Code
+    # { "status": "ok", "data": { "url": "https://idp-hostname/oxauth/restv1/uma/gather_claims?client_id=@!4116.DF7C.62D4.D0CF!0001!D420.A5E5!0008!6156.5BD4.5F9B.D172&ticket=d26c30fd-eb94-40da-9f61-0c424acedf0e&claims_redirect_uri=https://client.example.com&state=fk0vl0lvmn8imecjf67m57r772", "state": "fk0vl0lvmn8imecjf67m57r772", "error": null, "error_description": null } }
+    # ---
     #
     sub setParams
     {

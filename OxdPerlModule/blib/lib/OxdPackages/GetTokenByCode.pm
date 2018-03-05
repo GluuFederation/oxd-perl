@@ -8,7 +8,7 @@
 #
 # This content is released under the MIT License (MIT)
 #
-# Copyright (c) 2017, Gluu inc, USA, Austin
+# Copyright (c) 2018, Gluu inc, USA, Austin
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -29,13 +29,13 @@
 # THE SOFTWARE.
 #
 # @package	Gluu-oxd-library
-# @version	3.1.0
+# @version	3.1.2
 # @author	Sobhan Panda
 # @author_email	sobhan@centroxy.com
-# @copyright	Copyright (c) 2017, Gluu inc federation (https://gluu.org/)
+# @copyright	Copyright (c) 2018, Gluu inc federation (https://gluu.org/)
 # @license	http://opensource.org/licenses/MIT	MIT License
 # @link		https://gluu.org/
-# @since	Version 3.1.0
+# @since	Version 3.1.2
 # @filesource
 #/
 
@@ -282,9 +282,30 @@ package GetTokenByCode;	# This is the &quot;Class&quot;
 		return $self->{_httpcommand};
 	}
     
-    # Protocol parameter to oxd server
-    # @return void
-    
+    # Method: setParams
+    # This method sets the parameters for get_tokens_by_code command.
+    # This module uses `request` method of OxdClient module for sending request to oxd-server
+    # 
+    # Parameters:
+    #
+    #	string $oxd_id - (Required) oxd Id from Client registration
+    #
+    #	string $code - (Required) Code from OP redirect URL
+    #
+    #	string $state - (Required) State from OP redirect URL
+    #
+    #	string $protection_access_token - Protection Acccess Token. OPTIONAL for `oxd-server` but REQUIRED for `oxd-https-extension`
+    #
+    # Returns:
+    #	void
+    #
+    # This module uses `getResponseObject` method of OxdClient module for getting response from oxd.
+    # 
+    # *Example response from getResponseObject:*
+    # --- Code
+    # { "status": "ok", "data": { "access_token": "cfa5b25f-09d4-47bf-8762-98719406ace2", "expires_in": 299, "refresh_token": "51798a79-5be4-47d1-a898-4a65fe207b5c", "id_token": "eyJraWQiOiIdfgfdvcdyhMltA", "id_token_claims": { "iss": ["https://idp-hostname"], "sub": ["SGUMcFlAj3QlkOQVgwYpSozbjvynk4B2VNpr-mDnuVw"], "aud": ["@!4116.DF7C.62D4.D0CF!0001!D420.A5E5!0008!6156.5BD4.5F9B.D172"], "nonce": ["4pn3vgisdg4em0ups2ud79iig5"], "exp": [1513861298], "iat": [1513857698], "at_hash": ["8tCEomWN_VySJwkJ4lxYfA"] } } }
+    # ---
+    #
     sub setParams
     {
 		my ( $self, $params ) = @_;

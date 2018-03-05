@@ -8,7 +8,7 @@
 #
 # This content is released under the MIT License (MIT)
 #
-# Copyright (c) 2017, Gluu inc, USA, Austin
+# Copyright (c) 2018, Gluu inc, USA, Austin
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -29,13 +29,13 @@
 # THE SOFTWARE.
 #
 # @package	Gluu-oxd-library
-# @version      3.1.0
+# @version      3.1.2
 # @author	Sobhan Panda
 # @author	sobhan@centroxy.com
-# @copyright	Copyright (c) 2017, Gluu inc federation (https://gluu.org/)
+# @copyright	Copyright (c) 2018, Gluu inc federation (https://gluu.org/)
 # @license	http://opensource.org/licenses/MIT	MIT License
 # @link         https://gluu.org/
-# @since	Version 3.1.0
+# @since	Version 3.1.2
 # @filesource
 #/
 
@@ -117,8 +117,8 @@ package OxdSetupClient;	# This is the &quot;Class&quot;
 			# @var array _request_claims_locales
 			_request_claims_locales => shift,
 			
-			# @var string _request_client_redirect_uri
-			_request_client_redirect_uri => shift,
+			# @var string _request_claims_redirect_uri
+			_request_claims_redirect_uri => shift,
 			
 			
 			# Response parameter from oxd-server
@@ -481,14 +481,14 @@ package OxdSetupClient;	# This is the &quot;Class&quot;
     # @return string
     sub getRequestClaimsRedirectUri {
         my( $self ) = @_;
-		return $self->{_request_client_redirect_uri};
+		return $self->{_request_claims_redirect_uri};
     }
 
     # @param string $request_client_secret
     sub setRequestClaimsRedirectUri {
         my ( $self, $request_client_redirect_uri ) = @_;
-		$self->{_request_client_redirect_uri} = $request_client_redirect_uri if defined($request_client_redirect_uri);
-		return $self->{_request_client_redirect_uri};
+		$self->{_request_claims_redirect_uri} = $request_client_redirect_uri if defined($request_client_redirect_uri);
+		return $self->{_request_claims_redirect_uri};
     }
 
     # Protocol command to oxd server
@@ -511,8 +511,62 @@ package OxdSetupClient;	# This is the &quot;Class&quot;
 		#return $httpcommand;
     }
     
-    # Protocol parameter to oxd server
-    # @return void
+    # Method: setParams
+    # This method sets the parameters for setup_client command.
+    # This module uses `request` method of OxdClient module for sending request to oxd-server
+    # 
+    # Parameters:
+    #
+    #	string $authorization_redirect_uri - (Required) Uri to Redirect for Authorization
+    #
+    #	string $op_host - (Optional) Url that must points to a valid OpenID Connect Provider that supports client registration like Gluu Server.
+    #
+    #	string $post_logout_redirect_uri - (Optional) Uri to Redirect after Logout
+    #
+    #	string $application_type - (Optional) Application Type
+    #
+    #	array $response_types - (Optional) Response Types
+    #
+    #	array $grant_types - (Optional) Grant Types
+    #
+    #	array $scope - (Optional) Scope
+    #
+    #	array $acr_values - (Optional) ACR Values
+    #
+    #	string $client_name - (Optional) Client Name
+    #
+    #	string $client_jwks_uri - (Optional) Client JWKS Uri
+    #
+    #	string $client_token_endpoint_auth_method - (Optional) Client Token Endpoint Auth Method
+    #
+    #	array $client_request_uris - (Optional) Client Request URIs
+    #
+    #	array $client_frontchannel_logout_uris - (Optional) Client Front Channel Logout URIs
+    #
+    #	array $client_sector_identifier_uri - (Optional) Client Sector Identifier URIs
+    #
+    #	array $contacts - (Optional) Contacts
+    #
+    #	array $ui_locales - (Optional) UI Locales
+    #
+    #	array $claims_locales - (Optional) Claims Locales
+    #
+    #	string $client_id - (Optional) Client ID. If value presents, Ignores all other parameters and Skips new client registration forcing to use existing client. ClientSecret is REQUIRED if this parameter is set
+    #
+    #	string $client_secret - (Optional) Client Secret. Must be used together with ClientId.
+    #
+    #	array $claims_redirect_uri - (Optional) Claims Redirect URI.
+    #
+    # Returns:
+    #	void
+    #
+    # This module uses `getResponseObject` method of OxdClient module for getting response from oxd.
+    # 
+    # *Example response from getResponseObject:*
+    # --- Code
+    # { "status": "ok", "data": { "oxd_id": "c73134c8-c4ca-4bab-9baa-2e0ca20cc433", "op_host": "https://idp-hostname", "client_id": "@!4116.DF7C.62D4.D0CF!0001!D420.A5E5!0008!616C.398A.1380.1F45", "client_secret": "f996649f-b027-4537-abe5-71b7cb71ebae", "client_registration_access_token": "67e957b8-823e-412d-8e89-616c45b2db62", "client_registration_client_uri": "https://idp-hostname/oxauth/restv1/register?client_id=@!4116.DF7C.62D4.D0CF!0001!D420.A5E5!0008!616C.398A.1380.1F45", "client_id_issued_at": 1513857463, "client_secret_expires_at": 1513943863 } }
+    # ---
+    #
     sub setParams{
 		
 		my ( $self, $params ) = @_;

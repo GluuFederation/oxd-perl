@@ -9,7 +9,7 @@
  #
  # This content is released under the MIT License (MIT)
  #
- # Copyright (c) 2017, Gluu inc, USA, Austin
+ # Copyright (c) 2018, Gluu inc, USA, Austin
  #
  # Permission is hereby granted, free of charge, to any person obtaining a copy
  # of this software and associated documentation files (the "Software"), to deal
@@ -30,13 +30,13 @@
  # THE SOFTWARE.
  #
  # @package		Gluu-oxd-library
- # @version		3.1.0
+ # @version		3.1.2
  # @author		Sobhan Panda
  # @author_email	sobhan@centroxy.com
- # @copyright		Copyright (c) 2017, Gluu inc federation (https://gluu.org/)
+ # @copyright		Copyright (c) 2018, Gluu inc federation (https://gluu.org/)
  # @license		http://opensource.org/licenses/MIT	MIT License
  # @link		https://gluu.org/
- # @since		Version 3.1.0
+ # @since		Version 3.1.2
  # @filesource
  #
  #/
@@ -229,9 +229,30 @@ package GetAccessTokenByRefreshToken;	# This is the &quot;Class&quot;
 		return $self->{_httpcommand};
 	}
     
-    # Protocol parameter to oxd server
-    # @return void
-    
+    # Method: setParams
+    # This method sets the parameters for get_access_token_by_refresh_token command.
+    # This module uses `request` method of OxdClient module for sending request to oxd.
+    #
+    # Parameters:
+    #
+    #	string $oxd_id - (Required) oxd Id from Client registration
+    #
+    #	string $refresh_token - (Required) Refresh Token from get_tokens_by_code command
+    #
+    #	string $scope - (Optional) Scope
+    #
+    #	string $protection_access_token - Protection Acccess Token. OPTIONAL for `oxd-server` but REQUIRED for `oxd-https-extension`
+    #
+    # Returns:
+    #	void
+    #
+    # This module uses `getResponseObject` method of OxdClient module for getting response from oxd.
+    # 
+    # *Example response from getResponseObject:*
+    # --- Code
+    # { "status": "ok", "data": { "access_token": "fb5b52be-fd99-46b7-b87a-6167f86ae4bb", "expires_in": "299", "refresh_token": "49850248-ee70-4d21-85b2-949476c26e1b" } }
+    # ---
+    #
     sub setParams
     {  
 	my ( $self, $params ) = @_;

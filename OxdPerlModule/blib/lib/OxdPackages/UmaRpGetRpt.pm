@@ -7,7 +7,7 @@
  #
  # This content is released under the MIT License (MIT)
  #
- # Copyright (c) 2017, Gluu inc, USA, Austin
+ # Copyright (c) 2018, Gluu inc, USA, Austin
  #
  # Permission is hereby granted, free of charge, to any person obtaining a copy
  # of this software and associated documentation files (the "Software"), to deal
@@ -28,13 +28,13 @@
  # THE SOFTWARE.
  #
  # @package		Gluu-oxd-library
- # @version     	3.1.0
+ # @version     	3.1.2
  # @author		Inderpal Singh, Sobhan Panda
  # @author_email	inderpal@ourdesignz.com, sobhan@centroxy.com
- # @copyright		Copyright (c) 2016, Gluu inc federation (https://gluu.org/)
+ # @copyright		Copyright (c) 2018, Gluu inc federation (https://gluu.org/)
  # @license		http://opensource.org/licenses/MIT	MIT License
  # @link		https://gluu.org/
- # @since		Version 3.1.0
+ # @since		Version 3.1.2
  # @filesource
  #
 
@@ -93,7 +93,13 @@ use Data::Dumper;
 			# Gluu RP Token
 			# @var string $response_rpt
 			
-			_response_rpt => shift
+			_response_rpt => shift,
+			
+			_response_status => shift,
+			
+			_response_error => shift,
+			
+			_response_ticket => shift
 		};
 		# Print all the values just for clarification.
 		# print "First Name is $self->{_request_oxd_id}\n";
@@ -101,7 +107,7 @@ use Data::Dumper;
 		# print "<br>";
 		bless $self, $class;
 		return $self;
-    } 
+    }
     
     # @return string
     sub getRequestOxdId
@@ -300,8 +306,38 @@ use Data::Dumper;
     sub getResponseRpt
     {    
 		my( $self ) = @_;
-		$self->{_response_rpt} = $self->getResponseData()->{rpt};
+		$self->{_response_rpt} = $self->getResponseData()->{access_token};
         return $self->{_response_rpt};
+    }
+	
+	##
+    # @return string
+    #
+    sub getResponseStatus
+    {    
+		my( $self ) = @_;
+		$self->{_response_status} = $self->getResponseObject()->{status};
+        return $self->{_response_status};
+    }
+	
+	##
+    # @return string
+    #
+    sub getResponseError
+    {    
+		my( $self ) = @_;
+		$self->{_response_error} = $self->getResponseData()->{error};
+        return $self->{_response_error};
+    }
+	
+	##
+    # @return string
+    #
+    sub getResponseTicket
+    {    
+		my( $self ) = @_;
+		$self->{_response_ticket} = $self->getResponseData()->{details}->{ticket};
+        return $self->{_response_ticket};
     }
 
     ##
@@ -324,9 +360,49 @@ use Data::Dumper;
         $self->{_httpcommand} = 'uma-rp-get-rpt';
     }
 
-    ##
-    # Protocol parameter to oxd server
-    # @return void
+    # Method: setParams
+    # This method sets the parameters for uma_rp_get_rpt command.
+    # This module uses `request` method of OxdClient module for sending request to oxd-server
+    # 
+    # Parameters:
+    #
+    #	string $oxd_id - (Required) oxd Id from Client registration
+    #
+    #	string $ticket - (Required) Ticket from RS Check Access
+    #
+    #	string $claim_token - (Optional) Claim Token
+    #
+    #	string $claim_token_format - (Optional) Claim Token Format
+    #
+    #	string $pct - (Optional) PCT
+    #
+    #	string $rpt - (Optional) Request Party Token
+    #
+    #	array $scope - (Optional) Scope
+    #
+    #	string $state - (Optional) State returned from UMA_RP_GET_CLAIMS_GATHERING_URL
+    #
+    #	string $protection_access_token - Protection Acccess Token. OPTIONAL for `oxd-server` but REQUIRED for `oxd-https-extension`
+    #
+    # Returns:
+    #	void
+    #
+    # This module uses `getResponseObject` method of OxdClient module for getting response from oxd.
+    # 
+    # *Success Response from getResponseObject:*
+    # --- Code
+    # { "status":"ok", "data":{ "access_token":"SSJHBSUSSJHVhjsgvhsgvshgsv", "token_type":"Bearer", "pct":"c2F2ZWRjb25zZW50", "upgraded":true } }
+    # ---
+    #
+    # *Needs Info Error Response from getResponseObject:*
+    # --- Code
+    # { "status": "error", "data": { "error": "need_info", "error_description": "The authorization server needs additional information in order to determine whether the client is authorized to have these permissions.", "details": { "error": "need_info", "ticket": "ZXJyb3JfZGV0YWlscw==", "required_claims": [{ "claim_token_format": [ "http://openid.net/specs/openid-connect-core-1_0.html#IDToken" ], "claim_type": "urn:oid:0.9.2342.19200300.100.1.3", "friendly_name": "email", "issuer": ["https://example.com/idp"], "name": "email23423453ou453" }], "redirect_user": "https://as.example.com/rqp_claims?id=2346576421" } } }
+    # ---
+    #
+    # *Invalid Ticket Error Response from getResponseObject:*
+    # --- Code
+    # { "status":"error", "data":{ "error":"invalid_ticket", "error_description":"Ticket is not valid (outdated or not present on Authorization Server)." } }
+    # ---
     #
     sub setParams
     {

@@ -7,7 +7,7 @@
  #
  # This content is released under the MIT License (MIT)
  #
- # Copyright (c) 2017, Gluu inc, USA, Austin
+ # Copyright (c) 2018, Gluu inc, USA, Austin
  #
  # Permission is hereby granted, free of charge, to any person obtaining a copy
  # of this software and associated documentation files (the "Software"), to deal
@@ -28,13 +28,13 @@
  # THE SOFTWARE.
  #
  # @package		Gluu-oxd-library
- # @version     	3.1.0
+ # @version     	3.1.2
  # @author		Inderpal Singh, Sobhan Panda
  # @author_email	inderpal@ourdesignz.com, sobhan@centroxy.com
- # @copyright		Copyright (c) 2017, Gluu inc federation (https://gluu.org/)
+ # @copyright		Copyright (c) 2018, Gluu inc federation (https://gluu.org/)
  # @license		http://opensource.org/licenses/MIT	MIT License
  # @link		https://gluu.org/
- # @since		Version 3.1.0
+ # @since		Version 3.1.2
  # @filesource
  #/
 
@@ -132,13 +132,28 @@ use Data::Dumper;
 		$self->{_request_condition} = "";
     }
 
+    # Method: addConditionForPath
+    # 
+    # Parameters:
+    #
+    #	array $httpMethods - List of HTTP Methods supported in a condition
+    #
+    #	array $scopes - List of Scopes in a condition
+    #
+    #	array $ticketScopes - List of Scopes protected with ticket in a condition
+    #
+    #	dict $scope_expression - Scope expression for logical operations
+    #
+    # Returns:
+    #	dict Condition
     sub addConditionForPath{
-        my ( $self, $httpMethods, $scopes, $ticketScopes ) = @_;
+        my ( $self, $httpMethods, $scopes, $ticketScopes, $scope_expression ) = @_;
         
         my @request_condition =  {
                                 "httpMethods" => $httpMethods,
                                 "scopes" => $scopes,
-                               "ticketScopes" => $ticketScopes
+                                "ticketScopes" => $ticketScopes,
+                                "scope_expression" => $scope_expression
         };
         
         push $self->{_request_condition}, @request_condition;
@@ -147,6 +162,29 @@ use Data::Dumper;
     sub getCondition{
 		my( $self ) = @_;
 		return $self->{_request_condition};
+    }
+    
+    # Method: getScopeExpression
+    # 
+    # Parameters:
+    #
+    #	dict $rule - Rule
+    #
+    #	array $data - Data
+    #
+    # Returns:
+    #	dict ScopeExpression
+    sub getScopeExpression {
+	    my ( $self, $request_rule, $request_data ) = @_;
+	   
+	    my $request_scope_expression =  {
+		    "rule" => $request_rule,
+		    "data" => $request_data,
+	    };
+
+	    #push $self->{_request_scope_expression}, @request_scope_expression;
+	    return $request_scope_expression;
+	    
     }
     
     # Protocol command to oxd server
@@ -163,8 +201,28 @@ use Data::Dumper;
         $self->{_httpcommand} = 'uma-rs-protect';
     }
 
-    # Protocol parameter to oxd server
-    # @return void
+    # Method: setParams
+    # This method sets the parameters for uma_rs_protect command.
+    # This module uses `request` method of OxdClient module for sending request to oxd-server
+    # 
+    # Parameters:
+    #
+    #	string $oxd_id - (Required) oxd Id from Client registration
+    #
+    #	dict $resources - (Required) Resources to be protected
+    #
+    #	string $protection_access_token - Protection Acccess Token. OPTIONAL for `oxd-server` but REQUIRED for `oxd-https-extension`
+    #
+    # Returns:
+    #	void
+    #
+    # This module uses `getResponseObject` method of OxdClient module for getting response from oxd.
+    # 
+    # *Example response from getResponseObject:*
+    # --- Code
+    # { "status": "ok" }
+    # ---
+    #
     sub setParams{
         my ( $self, $params ) = @_;
         my $paramsArray = {

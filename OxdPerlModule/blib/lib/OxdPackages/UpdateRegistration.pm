@@ -8,7 +8,7 @@
  #
  # This content is released under the MIT License (MIT)
  #
- # Copyright (c) 2017, Gluu inc, USA, Austin
+ # Copyright (c) 2018, Gluu inc, USA, Austin
  #
  # Permission is hereby granted, free of charge, to any person obtaining a copy
  # of this software and associated documentation files (the "Software"), to deal
@@ -29,13 +29,13 @@
  # THE SOFTWARE.
  #
  # @package		Gluu-oxd-library
- # @version     	3.1.0
+ # @version     	3.1.2
  # @author		Ourdesignz, Sobhan Panda
  # @author_email	inderpal6785@gmail.com, sobhan@centroxy.com
- # @copyright		Copyright (c) 2017, Gluu inc federation (https://gluu.org/)
+ # @copyright		Copyright (c) 2018, Gluu inc federation (https://gluu.org/)
  # @license		http://opensource.org/licenses/MIT	MIT License
  # @link		https://gluu.org/
- # @since		Version 3.1.0
+ # @since		Version 3.1.2
  # @filesource
  #/
 
@@ -479,7 +479,7 @@ package UpdateRegistration;
     sub setCommand
     {
 		my ( $self, $command ) = @_;
-		$self->{_command} = 'update_site_registration';
+		$self->{_command} = 'update_site';
 		return $self->{_command};
 	}
 	
@@ -493,9 +493,58 @@ package UpdateRegistration;
 		return $self->{_httpcommand};
 	}
     
-    # Protocol parameter to oXD server
-    # @return void
-    
+    # Method: setParams
+    # This method sets the parameters for update_site command.
+    # This module uses `request` method of OxdClient module for sending request to oxd-server
+    # 
+    # Parameters:
+    #
+    #	string $oxd_id - (Required) oxd Id from Client registration
+    #
+    #	string $authorization_redirect_uri - (Required) Uri to Redirect for Authorization
+    #
+    #	string $post_logout_redirect_uri - (Optional) Uri to Redirect after Logout
+    #
+    #	array $client_frontchannel_logout_uris - (Optional) Client Front Channel Logout URIs
+    #
+    #	array $response_types - (Optional) Response Types
+    #
+    #	array $grant_types - (Optional) Grant Types
+    #
+    #	array $scope - (Optional) Scope
+    #
+    #	array $acr_values - (Optional) ACR Values
+    #
+    #	string $client_name - (Optional) Client Name
+    #
+    #	numeric $client_secret_expires_at - (Optional) Used to extend client lifetime (milliseconds since 1970)
+    #
+    #	string $client_jwks_uri - (Optional) Client JWKS Uri
+    #
+    #	string $client_token_endpoint_auth_method - (Optional) Client Token Endpoint Auth Method
+    #
+    #	array $client_request_uris - (Optional) Client Request URIs
+    #
+    #	array $client_sector_identifier_uri - (Optional) Client Sector Identifier URIs
+    #
+    #	array $contacts - (Optional) Contacts
+    #
+    #	array $ui_locales - (Optional) UI Locales
+    #
+    #	array $claims_locales - (Optional) Claims Locales
+    #
+    #	string $protection_access_token - Protection Acccess Token. OPTIONAL for `oxd-server` but REQUIRED for `oxd-https-extension`
+    #
+    # Returns:
+    #	void
+    #
+    # This module uses `getResponseObject` method of OxdClient module for getting response from oxd.
+    # 
+    # *Example response from getResponseObject:*
+    # --- Code
+    # { "status": "ok" }
+    # ---
+    #
     sub setParams
     {
         my ( $self, $params ) = @_;

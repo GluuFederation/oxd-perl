@@ -8,7 +8,7 @@
 #
 # @package	Gluu-oxd-library
 # @subpackage	Libraries
-# @version	3.1.0
+# @version	3.1.2
 # @author	Ourdesignz, Sobhan Panda
 # @author_email	inderpal6785@gmail.com, sobhan@centroxy.com
 # @see	        OxdClientSocket
@@ -232,9 +232,33 @@ package GetAuthorizationUrl;
 		return $self->{_httpcommand};
     }
     
-    # Protocol parameter to oxd server
-    # @return void
-    
+    # Method: setParams
+    # This method sets the parameters for get_authorization_url command.
+    # This module uses `request` method of OxdClient module for sending request to oxd-server
+    # 
+    # Parameters:
+    #
+    #	string $oxd_id - (Required) oxd Id from Client registration
+    #
+    #	array $scope - (Optional) Scope
+    #
+    #	array $acr_values - (Optional) ACR Values
+    #
+    #	string $prompt - (Optional) Prompt. If value not set, this field is skipped. prompt=login is REQUIRED if you want to force alter current user session. In case user is already logged in from SITE1 and SITE2 construsts authorization request and want to force alter current user session.
+    #
+    #	dict $custom_parameters - (Optional) ACR Values
+    #
+    #	string $protection_access_token - Protection Acccess Token. OPTIONAL for `oxd-server` but REQUIRED for `oxd-https-extension`
+    #
+    # Returns:
+    #	void
+    #
+    # This module uses `getResponseObject` method of OxdClient module for getting response from oxd.
+    # 
+    # *Example response from getResponseObject:*
+    # --- Code
+    # { "status": "ok", "data": { "authorization_url": "https://idp-hostname/oxauth/restv1/authorize?response_type=code&client_id=@!4116.DF7C.62D4.D0CF!0001!D420.A5E5!0008!6156.5BD4.5F9B.D172&redirect_uri=https://client.example.com:44383/Home/GetUserInfo&scope=openid+profile+email+uma_protection+uma_authorization&state=cim3uintftqoqckqhgd1vbs6iv&nonce=4pn3vgisdg4em0ups2ud79iig5&custom_response_headers=%5B%7B%22param1%22%3A%22value1%22%7D%2C%7B%22param2%22%3A%22value2%22%7D%5D" } }
+    # ---
     sub setParams
     {
 		my ( $self, $params ) = @_;
