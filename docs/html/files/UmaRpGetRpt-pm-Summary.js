@@ -1,0 +1,1 @@
+NDFramePage.OnPageTitleLoaded("File:UmaRpGetRpt.pm","UmaRpGetRpt.pm");NDSummary.OnSummaryLoaded("File:UmaRpGetRpt.pm",[["Perl","Perl"]],[["Functions","Function"],["Groups","Group"]],[[1,0,1,"Functions","Functions"],[2,0,0,"setParams","setParams"]]);

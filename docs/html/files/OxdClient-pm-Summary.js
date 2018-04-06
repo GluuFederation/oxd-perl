@@ -1,0 +1,1 @@
+NDFramePage.OnPageTitleLoaded("File:OxdClient.pm","OxdClient.pm");NDSummary.OnSummaryLoaded("File:OxdClient.pm",[["Perl","Perl"]],[["Functions","Function"],["Groups","Group"]],[[35,0,1,"Functions","Functions"],[36,0,0,"request","request"],[37,0,0,"getResponseData","getResponseData"],[38,0,0,"getData","getData"],[39,0,0,"getResponseObject","getResponseObject"]]);

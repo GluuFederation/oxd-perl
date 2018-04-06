@@ -1,0 +1,1 @@
+NDSummary.OnToolTipsLoaded("File:UmaRpGetRpt.pm",{2:"<div class=\"NDToolTip TFunction LPerl\"><div id=\"NDPrototype2\" class=\"NDPrototype NoParameterForm\">sub setParams</div><div class=\"TTSummary\">This method sets the parameters for uma_rp_get_rpt command.&nbsp; This module uses `request` method of OxdClient module for sending request to oxd-server</div></div>"});

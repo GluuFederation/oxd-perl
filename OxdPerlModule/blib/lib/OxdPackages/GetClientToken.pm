@@ -8,7 +8,7 @@
 #
 # This content is released under the MIT License (MIT)
 #
-# Copyright (c) 2017, Gluu inc, USA, Austin
+# Copyright (c) 2018, Gluu inc, USA, Austin
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -29,13 +29,13 @@
 # THE SOFTWARE.
 #
 # @package	Gluu-oxd-library
-# @version	3.1.0
+# @version	3.1.2
 # @author	Sobhan Panda
 # @author_email	sobhan@centroxy.com
-# @copyright	Copyright (c) 2017, Gluu inc federation (https://gluu.org/)
+# @copyright	Copyright (c) 2018, Gluu inc federation (https://gluu.org/)
 # @license	http://opensource.org/licenses/MIT	MIT License
 # @link		https://gluu.org/
-# @since	Version 3.1.0
+# @since	Version 3.1.2
 # @filesource
 #/
 
@@ -59,38 +59,16 @@ package GetClientToken;	# This is the &quot;Class&quot;
 			# @var string _request_op_host                         Gluu server url
 			_request_op_host => shift,
 			
-			# @var array _request_acr_values                       Gluu login acr type, can be basic, duo, u2f, gplus and etc.
-			_request_acr_values => [],
-			
-			# @var string _request_authorization_redirect_uri      Site authorization redirect uri
-			_request_authorization_redirect_uri => shift,
-			
-			# @var string _request_post_logout_redirect_uri             Site logout redirect uri
-			_request_post_logout_redirect_uri => shift,
-			
-			# @var array _request_contacts
-			_request_contacts => shift,
-			
-			# @var array _request_grant_types                     OpenID Token Request type
-			_request_grant_types => [],
-			
-			#@var array _request_response_types                   OpenID Authentication response types
-			_request_response_types => [],
-			
 			# @var array _request_scope                            For getting needed scopes from gluu-server
 			_request_scope => [],
-			
-			# @var string _request_application_type                web or mobile
-			_request_application_type => shift,
 			
 			# @var string _request_client_id                       OpenID provider client id
 			_request_client_id => shift,
 			
-			# @var string _request_client_name                     OpenID provider client name
-			_request_client_name => shift,
-			
 			# @var string _request_client_secret     OpenID provider client secret
 			_request_client_secret => shift,
+			
+			_request_op_discovery_path => shift,
 			
 			
 			
@@ -170,6 +148,20 @@ package GetClientToken;	# This is the &quot;Class&quot;
 		$self->{_request_op_discovery_path} = $request_op_discovery_path if defined($request_op_discovery_path);
 		return $self->{_request_op_discovery_path};
     }
+    
+    # @return array
+    sub getRequestScope{
+        my( $self ) = @_;
+		return $self->{_request_scope};
+    }
+
+    # @param array $request_scope
+    # @return void
+    sub setRequestScope{
+        my ( $self, $request_scope ) = @_;
+		$self->{_request_scope} = $request_scope if defined($request_scope);
+		return $self->{_request_scope};
+    }
 
     # @return string
     sub getResponseAccessToken {
@@ -219,8 +211,32 @@ package GetClientToken;	# This is the &quot;Class&quot;
 		#return $httpcommand;
     }
     
-    # Protocol parameter to oxd server
-    # @return void
+    # Method: setParams
+    # This method sets the parameters for get_client_token command.
+    # This module uses `request` method of OxdClient module for sending request to oxd-server
+    # 
+    # Parameters:
+    #
+    #	string $client_id - (Required) Client Id from Client registration
+    #
+    #	string $client_secret - (Required) Client Secret. Must be used together with ClientId.
+    #
+    #	string $op_host - (Required) Url that must points to a valid OpenID Connect Provider that supports client registration like Gluu Server.
+    #
+    #	string $op_discovery_path - (Optional) Path to discovery document
+    #
+    #	array $scope - (Optional) Scope
+    #
+    # Returns:
+    #	void
+    #
+    # This module uses `getResponseObject` method of OxdClient module for getting response from oxd.
+    # 
+    # *Example response from getResponseObject:*
+    # --- Code
+    # { "status": "ok", "data": { "access_token": "7ec389c5-64f8-49a3-a80c-e3e16d134bcb", "expires_in": 299, "refresh_token": null, "scope": "openid" } }
+    # ---
+    #
     sub setParams{
 		
 		my ( $self, $params ) = @_;
@@ -229,7 +245,8 @@ package GetClientToken;	# This is the &quot;Class&quot;
             "client_id"=> $self->getRequestClientId(),
             "client_secret"=> $self->getRequestClientSecret(),
             "op_host" => $self->getRequestOpHost(),
-            "op_discovery_path" => $self->getRequestOpDiscoveryPath()
+            "op_discovery_path" => $self->getRequestOpDiscoveryPath(),
+            "scope" => $self->getRequestScope()
         };
        
 		$self->{_params} = $paramsArray;

@@ -1,0 +1,1 @@
+NDSummary.OnToolTipsLoaded("File:OxdSetupClient.pm",{18:"<div class=\"NDToolTip TFunction LPerl\"><div id=\"NDPrototype18\" class=\"NDPrototype NoParameterForm\">sub setParams</div><div class=\"TTSummary\">This method sets the parameters for setup_client command.&nbsp; This module uses `request` method of OxdClient module for sending request to oxd-server</div></div>"});

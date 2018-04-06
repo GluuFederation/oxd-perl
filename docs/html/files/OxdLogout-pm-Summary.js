@@ -1,0 +1,1 @@
+NDFramePage.OnPageTitleLoaded("File:OxdLogout.pm","OxdLogout.pm");NDSummary.OnSummaryLoaded("File:OxdLogout.pm",[["Perl","Perl"]],[["Functions","Function"],["Groups","Group"]],[[19,0,1,"Functions","Functions"],[20,0,0,"setParams","setParams"]]);

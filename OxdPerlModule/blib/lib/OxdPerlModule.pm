@@ -6,7 +6,9 @@ use warnings FATAL => 'all';
 use OxdPackages::OxdConfig;
 use OxdPackages::OxdRegister;
 use OxdPackages::OxdSetupClient;
+use OxdPackages::OxdRemove;
 use OxdPackages::GetClientToken;
+use OxdPackages::IntrospectAccessToken;
 use OxdPackages::UpdateRegistration;
 use OxdPackages::GetAuthorizationUrl;
 use OxdPackages::GetTokenByCode;
@@ -15,6 +17,7 @@ use OxdPackages::GetUserInfo;
 use OxdPackages::OxdLogout;
 use OxdPackages::UmaRsProtect;
 use OxdPackages::UmaRpGetRpt;
+use OxdPackages::UmaIntrospectRpt;
 use OxdPackages::UmaRsCheckAccess;
 use OxdPackages::UmaRpGetClaimsGatheringUrl;
 

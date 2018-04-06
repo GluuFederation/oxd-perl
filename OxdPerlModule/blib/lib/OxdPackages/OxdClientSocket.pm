@@ -8,7 +8,7 @@
 #
 # This content is released under the MIT License (MIT)
 #
-# Copyright (c) 2017, Gluu inc, USA, Austin
+# Copyright (c) 2018, Gluu inc, USA, Austin
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -29,13 +29,13 @@
 # THE SOFTWARE.
 #
 # @package	Gluu-oxd-library
-# @version	3.1.0
+# @version	3.1.2
 # @author	Sobhan Panda
 # @author_email	sobhan@centroxy.com
-# @copyright	Copyright (c) 2017, Gluu inc federation (https://gluu.org/)
+# @copyright	Copyright (c) 2018, Gluu inc federation (https://gluu.org/)
 # @license	http://opensource.org/licenses/MIT	MIT License
 # @link		https://gluu.org/
-# @since	Version 3.1.0
+# @since	Version 3.1.2
 # @filesource
 #/
 

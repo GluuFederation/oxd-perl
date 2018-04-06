@@ -8,7 +8,7 @@
 #
 # This content is released under the MIT License (MIT)
 #
-# Copyright (c) 2017, Gluu inc, USA, Austin
+# Copyright (c) 2018, Gluu inc, USA, Austin
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -29,13 +29,13 @@
 # THE SOFTWARE.
 #
 # @package	Gluu-oxd-library
-# @version      3.1.0
+# @version      3.1.2
 # @author	Ourdesignz, Sobhan Panda
 # @author	gaurav.chhabra6785@gmail.com, sobhan@centroxy.com
-# @copyright	Copyright (c) 2017, Gluu inc federation (https://gluu.org/)
+# @copyright	Copyright (c) 2018, Gluu inc federation (https://gluu.org/)
 # @license	http://opensource.org/licenses/MIT	MIT License
 # @link         https://gluu.org/
-# @since	Version 3.1.0
+# @since	Version 3.1.2
 # @filesource
 #/
 
@@ -113,6 +113,8 @@ sub new{
         _client_name => shift,
         _client_id => shift,
         _client_secret => shift,
+        _claims_redirect_uri => shift,
+        _resource_end_point => shift
     };
     
     # Print all the values just for clarification.
@@ -311,6 +313,28 @@ sub getClientSecret {
 }
 
 
+sub setClaimsRedirectUri {
+    my ( $self, $claims_redirect_uri ) = @_;
+    $self->{_claims_redirect_uri} = $claims_redirect_uri if defined($claims_redirect_uri);
+    return $self->{_claims_redirect_uri};
+}
+
+sub getClaimsRedirectUri {
+    my( $self ) = @_;
+    return $self->{_claims_redirect_uri};
+}
+
+
+sub setResourceEndPoint {
+    my ( $self, $resource_end_point ) = @_;
+    $self->{_resource_end_point} = $resource_end_point if defined($resource_end_point);
+    return $self->{_resource_end_point};
+}
+
+sub getResourceEndPoint {
+    my( $self ) = @_;
+    return $self->{_resource_end_point};
+}
 
 sub json_read{
 	
@@ -363,6 +387,8 @@ sub json_read{
 	my $connection_type = $configOBJECT->{connection_type};
 	my $oxd_id = $configOBJECT->{oxd_id};
 	my $clientName = $configOBJECT->{client_name};
+	my $claims_redirect_uri = $configOBJECT->{claims_redirect_uri};
+	my $resource_end_point = $configOBJECT->{resource_end_point};
 	
 	#$self->new( $op_host, $oxd_host_port );
 	$self->setOpHost( $op_host );
@@ -379,6 +405,8 @@ sub json_read{
 	$self->setConnectionType( $connection_type );
 	$self->setOxdId( $oxd_id );
 	$self->setClientName( $clientName );
+	$self->setClaimsRedirectUri( $claims_redirect_uri );
+	$self->setResourceEndPoint( $resource_end_point );
 	
 	if($configOBJECT->{client_id}){
                 my $client_id = $configOBJECT->{client_id};
