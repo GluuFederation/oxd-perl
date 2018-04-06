@@ -10,7 +10,7 @@
  * @Created On: 21-10-2016
  * Author: Inderpal Singh
  * Email: inderpal@ourdesignz.com
- * Updated On: 11/16/2017
+ * Updated On: 03/08/2018
  * Author: Sobhan Panda
  * Email: sobhan@centroxy.com
  * Company: Gluu Inc.
@@ -128,7 +128,7 @@ sub print_html_form {
 		
 		print '<h1>Resource:</h1>
 			</br>';
-		print $response->{_content};
+		print $response;
 		
 		print '</br></br></br></br></br></br>
 		<a href="uma.cgi"><span class="btn btn-default btn-md glyphicon glyphicon-arrow-left"></span></a>';
@@ -193,6 +193,8 @@ sub print_html_form {
 	}
 }
 
+
+### UMA Implementation - Start
 sub resource {
 	my $response = '';
 	if ($session->param('uma_state') && $session->param('uma_ticket')) {
@@ -244,10 +246,9 @@ sub get_resource_request {
 	elsif($rptStatus eq 'got_rpt') {
 		if(is_rpt_active($session->param('uma_rpt')) eq 1) {
 			$response = make_http_request($resource_end_point, $httpmethod, $session->param('uma_rpt'), '');
-			print_html_form($response);
 		}
 		else {
-			print_html_form('Inactive RPT');
+			$response = 'Inactive RPT';
 		}
 	}
 	
@@ -271,7 +272,7 @@ sub get_ticket {
 	
 	if (index($ticketResponse, 'Unauthorized') != -1) {
 		my @values = split(';', $ticketResponse);
-
+		
 		foreach my $ticketString (@values) {
 			if (index($ticketString, 'ticket') != -1) {
 				my @ticketArray = split(':', $ticketString);
@@ -300,8 +301,10 @@ sub make_http_request {
 	my $response = $ua->request($req);
 	
 	
-	if($response->{_headers}->{ticket}) {
-		return "Unauthorized;ticket:".$response->{_headers}->{ticket};
+	if (index($response->{_content}, 'ticket') != -1) {
+		return "Unauthorized;".$response->{_content};
+	} else {
+		return $response->{_content};
 	}
 	
 	return $response;
@@ -321,6 +324,7 @@ sub get_rpt {
 	$uma_rp_get_rpt->request();
 
 	
+	## Scope is mapped with uma_rpt_policy
 	if($uma_rp_get_rpt->getResponseStatus() eq 'error' && $uma_rp_get_rpt->getResponseError() eq 'need_info') {
 		my $uma_ticket = $uma_rp_get_rpt->getResponseTicket();
 		$session->param('uma_ticket', $uma_ticket);
@@ -343,7 +347,7 @@ sub get_claims {
 	if($session->param('uma_ticket')) {
 		$uma_rp_get_claims_gathering_url->setRequestTicket($session->param('uma_ticket'));
 	}
-	$uma_rp_get_claims_gathering_url->setRequestClaimsRedirectUri('https://client.example.com:8090/cgi-bin/perl_demo/uma.cgi');
+	$uma_rp_get_claims_gathering_url->setRequestClaimsRedirectUri($claims_redirect_uri);
 	$uma_rp_get_claims_gathering_url->setRequestProtectionAccessToken(getClientToken_authentication());
 	
 	$uma_rp_get_claims_gathering_url->request();
@@ -354,6 +358,8 @@ sub get_claims {
 	#print_html_form($response);
 }
 
+### UMA Implementation - End
+
 
 #### Start: UMA Methods for Test
 sub uma_rs_protect_request {
@@ -361,7 +367,7 @@ sub uma_rs_protect_request {
 	# #### Without scope_expression
 	# $uma_rs_protect = new UmaRsProtect();
 	# $uma_rs_protect->setRequestOxdId($oxd_id);
-	# $uma_rs_protect->addConditionForPath(["GET"],["http://photoz.example.com/dev/actions/a214","http://photoz.example.com/dev/actions/a224","http://photoz.example.com/dev/actions/a234"], ["http://photoz.example.com/dev/actions/a214","http://photoz.example.com/dev/actions/a224","http://photoz.example.com/dev/actions/a234"]);
+	# $uma_rs_protect->addConditionForPath(["GET"],["https://client.example.com:44300/api","https://client.example.com:44300/api1","https://client.example.com:44300/api2"], ["https://client.example.com:44300/api","https://client.example.com:44300/api1","https://client.example.com:44300/api2"]);
 	# $uma_rs_protect->addResource('/GetAll24');
 	# $uma_rs_protect->setRequestProtectionAccessToken(getClientToken_authentication());#Test2
 	# ########
