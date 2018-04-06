@@ -596,6 +596,10 @@ sub protect_resource {
 	#### Using scope_expression
 	$uma_rs_protect = new UmaRsProtect();
 	$uma_rs_protect->setRequestOxdId($oxd_id);
+	$uma_rs_protect->setOverwrite(true);
+	
+	# %rule = ('or' => [{'var' => 0}]);
+	# my $data = ["https://client.example.com:8090/cgi-bin/perl_api"];
 	
 	%rule = ('and' => [{'or' => [{'var' => 0},{'var' => 1}]},{'var' => 2}]);
 	my $data = ["https://client.example.com:8090/cgi-bin/perl_api", "https://client.example.com:8090/cgi-bin/perl_api1", "https://client.example.com:8090/cgi-bin/perl_api2"];

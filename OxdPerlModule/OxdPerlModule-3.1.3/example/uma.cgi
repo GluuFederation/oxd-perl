@@ -140,44 +140,38 @@ sub print_html_form {
 	print '<div class="col-md-4">'."\n";
 	
 	
-    #print '<ul class = "list-group">'."\n";
-	#print '<li class="list-group-item"><a href="uma_rs_protect_test.cgi" target="_blank" >UMA RS Protect</a></li>'."\n";
-	#print '<li class="list-group-item"><a href="uma_rs_ckeck_access_test.cgi" target="_blank" >UMA RS Check Access</a></li>'."\n";
-	#print '<li class="list-group-item"><a href="uma_rp_get_rpt_test.cgi" target="_blank" >UMA RP - Get RPT</a></li>'."\n";
-	#print '<li class="list-group-item"><a href="uma_rp_get_claims_gathering_url_test.cgi" target="_blank" >UMA RP - Get Claims-Gathering URL</a></li>'."\n";
-    #print '</ul>'."\n";
 	print '</div>'."\n";
 	print '</div>'."\n";
 	
-	print '<div class="row">
-				<div class="col-md-4">
-					<input type="submit" value="UMA RS Protect" class="btn btn-primary" id="uma_rs_protect" name="uma_rs_protect" >
-				</div>
-			</div>';
+	# print '<div class="row">
+				# <div class="col-md-4">
+					# <input type="submit" value="UMA RS Protect" class="btn btn-primary" id="uma_rs_protect" name="uma_rs_protect" >
+				# </div>
+			# </div>';
 			
-	print '<div class="row">
-				<div class="col-md-4">
-					<input type="submit" value="UMA RS Check Access" class="btn btn-primary" id="uma_rs_check_access" name="uma_rs_check_access" >
-				</div>
-			</div>';
+	# print '<div class="row">
+				# <div class="col-md-4">
+					# <input type="submit" value="UMA RS Check Access" class="btn btn-primary" id="uma_rs_check_access" name="uma_rs_check_access" >
+				# </div>
+			# </div>';
 	
-	print '<div class="row">
-				<div class="col-md-4">
-					<input type="submit" value="UMA RP Get RPT" class="btn btn-primary" id="uma_rp_get_rpt" name="uma_rp_get_rpt" >
-				</div>
-			</div>';
+	# print '<div class="row">
+				# <div class="col-md-4">
+					# <input type="submit" value="UMA RP Get RPT" class="btn btn-primary" id="uma_rp_get_rpt" name="uma_rp_get_rpt" >
+				# </div>
+			# </div>';
 			
-	print '<div class="row">
-				<div class="col-md-4">
-					<input type="submit" value="UMA Introspect RPT" class="btn btn-primary" id="introspect_rpt" name="introspect_rpt" >
-				</div>
-			</div>';
+	# print '<div class="row">
+				# <div class="col-md-4">
+					# <input type="submit" value="UMA Introspect RPT" class="btn btn-primary" id="introspect_rpt" name="introspect_rpt" >
+				# </div>
+			# </div>';
 			
-	print '<div class="row">
-				<div class="col-md-4">
-					<input type="submit" value="UMA RP Get Claims-Gathering URL" class="btn btn-primary" id="uma_rp_get_claims_gathering_url" name="uma_rp_get_claims_gathering_url" >
-				</div>
-			</div>'."</br>";
+	# print '<div class="row">
+				# <div class="col-md-4">
+					# <input type="submit" value="UMA RP Get Claims-Gathering URL" class="btn btn-primary" id="uma_rp_get_claims_gathering_url" name="uma_rp_get_claims_gathering_url" >
+				# </div>
+			# </div>'."</br>";
 			
 			
 	print '<div class="row">
@@ -376,6 +370,7 @@ sub uma_rs_protect_request {
 	#### Using scope_expression
 	$uma_rs_protect = new UmaRsProtect();
 	$uma_rs_protect->setRequestOxdId($oxd_id);
+	$uma_rs_protect->setOverwrite(true);
 	
 	%rule = ('and' => [{'or' => [{'var' => 0},{'var' => 1}]},{'var' => 2}]);
 	my $data = ["https://client.example.com:44300/api", "https://client.example.com:44300/api1", "https://client.example.com:44300/api2"];

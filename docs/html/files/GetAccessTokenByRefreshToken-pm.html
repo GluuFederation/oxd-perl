@@ -8,13 +8,13 @@
 
 <body onload="NDLoader.OnLoad('Content');" class="NDPage NDContentPage">
 
-<a name="Functions"></a><a name="Topic33"></a><div class="CTopic TGroup LPerl first">
+<a name="Functions"></a><a name="Topic38"></a><div class="CTopic TGroup LPerl first">
  <div class="CTitle">Functions</div>
 </div>
 
-<a name="setParams"></a><a name="Topic34"></a><div class="CTopic TFunction LPerl last">
+<a name="setParams"></a><a name="Topic39"></a><div class="CTopic TFunction LPerl last">
  <div class="CTitle">setParams</div>
- <div id="NDPrototype34" class="NDPrototype NoParameterForm">sub setParams</div>
+ <div id="NDPrototype39" class="NDPrototype NoParameterForm">sub setParams</div>
  <div class="CBody"><p>This method sets the parameters for get_access_token_by_refresh_token command.&nbsp; This module uses `request` method of OxdClient module for sending request to oxd.</p><div class="CHeading">Parameters</div><table class="CDefinitionList"><tr><td class="CDLEntry">string $oxd_id</td><td class="CDLDefinition"><p>(Required) oxd Id from Client registration</p></td></tr><tr><td class="CDLEntry">string $refresh_token</td><td class="CDLDefinition"><p>(Required) Refresh Token from get_tokens_by_code command</p></td></tr><tr><td class="CDLEntry">string $scope</td><td class="CDLDefinition"><p>(Optional) Scope</p></td></tr><tr><td class="CDLEntry">string $protection_access_token</td><td class="CDLDefinition"><p>Protection Acccess Token. OPTIONAL for `oxd-server` but REQUIRED for `oxd-https-extension`</p></td></tr></table><div class="CHeading">Returns</div><p>void</p><p>This module uses `getResponseObject` method of OxdClient module for getting response from oxd.</p><p><b>Example response from getResponseObject:</b></p><pre>{ <span class="SHString">&quot;status&quot;</span>: <span class="SHString">&quot;ok&quot;</span>, <span class="SHString">&quot;data&quot;</span>: { <span class="SHString">&quot;access_token&quot;</span>: <span class="SHString">&quot;fb5b52be-fd99-46b7-b87a-6167f86ae4bb&quot;</span>, <span class="SHString">&quot;expires_in&quot;</span>: <span class="SHString">&quot;299&quot;</span>, <span class="SHString">&quot;refresh_token&quot;</span>: <span class="SHString">&quot;49850248-ee70-4d21-85b2-949476c26e1b&quot;</span> } }</pre></div>
 </div>
 

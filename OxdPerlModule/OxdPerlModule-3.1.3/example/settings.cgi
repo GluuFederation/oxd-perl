@@ -7,7 +7,7 @@
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @Created On: 03/08/2018
+ * @Created On: 08/01/2017
  * Author: Sobhan Panda
  * Email: sobhan@centroxy.com
  * Company: Gluu Inc.
@@ -54,6 +54,7 @@ my $oxd_id = '';
 my $clientName = '';
 my $client_id = '';
 my $client_secret = '';
+my $claims_redirect_uri = '';
 
 my $clientId_exists = false;
 my $clientId_visible = false;
@@ -67,7 +68,7 @@ $session->param('oxd_id', $oxd_id);
 $session->param('client_id', $client_id);
 $session->param('client_secret', $client_secret);
 $session->param('op_host', $opHost);
-my $client_name = 'Perl_Test_Application';
+my $client_name = 'oxd_csharp';
 
 
 # Output the HTTP header
@@ -85,10 +86,12 @@ my $client_name = 'Perl_Test_Application';
 if ($cgi->param("registerSite")) {
 	# Parameters are defined, therefore the form has been submitted
 	oxd_setup_Client($cgi);
+} elsif ($cgi->param("update")	) {
+	oxd_update($cgi);
 } elsif ($cgi->param("delete")) {
 	oxd_delete($cgi);
-} elsif ($cgi->param("Protect")) {
-	protect_resource($cgi);
+} elsif ($cgi->param("introspectToken")) {
+	oxd_introspectAccessToken($cgi);
 } else {
 	# We're here for the first time, display the form
 	print_html_form();
@@ -126,6 +129,7 @@ sub Load_config_values {
 	$clientName = $object->getClientName();
 	$client_id = $object->getClientId();
 	$client_secret = $object->getClientSecret();
+	$claims_redirect_uri = $object->getClaimsRedirectUri();
 	
 	if($client_id) {
 		$clientId_exists = true;
@@ -288,7 +292,32 @@ sub print_html_header {
 }
 
 sub print_html_footer {
+	my $message = shift;
 	
+	print '</form>
+
+			    <br>
+				<div class="row">
+				    <div class="col-md-8">
+					<label>oxd id:</label>';
+					if($oxd_id) {
+					    print "$oxd_id";
+					}
+			
+			print "</div>
+				</div>
+			       
+			    <br>
+				<div class='row'>
+				    <div class='col-md-8'>
+					<label> $message </label>
+				    </div>
+				</div>
+
+
+			</div>
+		    </body>
+		</html>"."\n";
 }
 
 # Displays the  form
@@ -296,18 +325,8 @@ sub print_html_form {
 	my $message = shift;
     
 	Load_config_values();
+	print_html_header();
 	
-    # Remove any potentially malicious HTML tags
-    
-    print_html_header();
-    if($your_mail){
-		$your_mail =~ s/<([^>]|\n)*>//g;
-	}else{
-		$your_mail = "";
-	}
-	if(!$gluu_server_url){
-		$gluu_server_url = "";
-	}
 	
 	print '<body class="container" >
 			<div id="bod_div">
@@ -430,45 +449,56 @@ sub print_html_form {
 			       <br>';
 
 			       if($oxd_id) {
-			print '<input type="submit" value="Create" class="btn btn-success" id="registerSite" name="registerSite" disabled>';
+			print '<input type="submit" value="Register" class="btn btn-success" id="registerSite" name="registerSite" disabled>
+				    <input type="button" value="Edit" class="btn btn-primary" id="edit" onclick = "edit_enable()" >
+				    <input type="submit" value="Update" class="btn btn-primary" id="update" name="update" disabled>
+				    ';
 			       } else {
-			print '<input type="submit" value="Create" class="btn btn-success" id="registerSite" name="registerSite" >';
+			print '<input type="submit" value="Create" class="btn btn-success" id="registerSite" name="registerSite" >
+				    <input type="button" value="Edit" class="btn btn-primary" id="edit" onclick = "edit_enable()" disabled>
+				    <input type="submit" value="Update" class="btn btn-primary" id="update" name="update" disabled>';
 				}
 				
-			print '&nbsp; <input type="submit" class="btn btn-danger" id="delete" name="delete" value="Delete" >
-				<input type="submit" class="btn btn-info" id="Protect" name="Protect" value="ProtectResource" >';
+			print '&nbsp; <input type="submit" class="btn btn-danger" id="delete" name="delete" onclick = "edit_enable()" value="Delete" >
+				&nbsp; <a href="index.cgi" class="btn btn-default" >Go to Login Page</a>';
 			
+			# if($message){
+				# print '</br>$message';
+			# }
 			
+			#<input type="submit" value="Introspect" class="btn btn-success" id="introspectToken" name="introspectToken" >
 
 			
-			print '</form>
-
-			    <br>
-				<div class="row">
-				    <div class="col-md-8">
-					<label>oxd id:</label>';
-					if($oxd_id) {
-					    print "$oxd_id";
-					}
-			
-			print "</div>
-				</div>
-			       
-			    <br>
-				<div class='row'>
-				    <div class='col-md-8'>
-					<label> $message </label>
-				    </div>
-				</div>
-
-
-			</div>
-		    </body>
-		</html>"."\n";
+	print_html_footer($message);
 }
 
+# Validate submiited data
+sub validate_form
+{
+    my $your_mail = $cgi->param("your_mail");
+    my $gluu_server_url = $cgi->param("gluu_server_url");
+   
+    my $error_message = "";
+
+    $error_message .= "Please enter your email<br/>" if ( !$your_mail );
+    $error_message .= "Please specify your Gluu url<br/>" if ( !$gluu_server_url );
+    
+    if ( $error_message )
+    {
+        # Errors with the form - redisplay it and return failure
+        print_html_form ( $error_message, $your_mail, $gluu_server_url);
+        return 0;
+    }
+    else
+    {
+        # Form OK - return success
+        return 1;
+    }
+}
 
 sub getClientToken_authentication {
+	
+	my ($opHost, $client_id, $client_secret) = @_;
 	
 	if($client_id && $client_secret){
 		
@@ -517,14 +547,14 @@ sub oxd_setup_Client {
 		update_client($client_id, $client_secret);
 		
 		setup_client_req($ophost_ui, $auth_redirect_uri_ui, $post_logout_uri_ui, $client_name_ui);
-		
-		print_html_form('Setup Client completed');
+		# register_site_req($ophost_ui, $auth_redirect_uri_ui, $post_logout_uri_ui, $client_name_ui);#Test2
+		print_html_form('Client Setup completed.');
 	}
 	else
 	{
 		setup_client_req($ophost_ui, $auth_redirect_uri_ui, $post_logout_uri_ui, $client_name_ui);
-		
-		print_html_form('Setup Client completed');
+		# register_site_req($ophost_ui, $auth_redirect_uri_ui, $post_logout_uri_ui, $client_name_ui);#Test2
+		print_html_form('Client Setup completed.');
 	}
 }
 
@@ -538,7 +568,7 @@ sub setup_client_req {
 	$setup_client->setRequestAuthorizationRedirectUri($auth_redirect_uri_ui);
 	$setup_client->setRequestPostLogoutRedirectUri($post_logout_uri_ui);
 	$setup_client->setRequestClientLogoutUris([$clientFrontChannelLogoutUrl]);
-	$setup_client->setRequestClaimsRedirectUri(['https://client.example.com:8090/cgi-bin/perl_demo/uma.cgi']);
+	$setup_client->setRequestClaimsRedirectUri([$claims_redirect_uri]);
 	$setup_client->setRequestGrantTypes($grantType);
 	$setup_client->setRequestResponseTypes($responseType);
 	$setup_client->setRequestScope($scope);
@@ -563,10 +593,122 @@ sub setup_client_req {
 	
 }
 
+sub register_site_req {
+	my ($ophost_ui, $auth_redirect_uri_ui, $post_logout_uri_ui, $client_name_ui) = @_;
+	
+	my $register_site = new OxdRegister( );#Test2
+	
+	$register_site->setRequestOpHost($ophost_ui);
+	#$register_site->setRequestAcrValues($acrValues);
+	$register_site->setRequestAuthorizationRedirectUri($auth_redirect_uri_ui);
+	$register_site->setRequestPostLogoutRedirectUri($post_logout_uri_ui);
+	$register_site->setRequestClientLogoutUris([$clientFrontChannelLogoutUrl]);
+	$register_site->setRequestClaimsRedirectUri([$claims_redirect_uri]);
+	$register_site->setRequestGrantTypes($grantType);
+	$register_site->setRequestResponseTypes($responseType);
+	$register_site->setRequestScope($scope);
+	$register_site->setRequestApplicationType($applicationType);
+	$register_site->setRequestClientName($client_name_ui);
+	# my $protection_access_token = getClientToken_authentication($ophost_ui, $client_id, $client_secret);#Test2
+	# $register_site->setRequestProtectionAccessToken($protection_access_token);#Test2
+	if($client_id)
+	{
+		$register_site->setRequestClientId($client_id);
+	}
+	if($client_secret)
+	{
+		$register_site->setRequestClientSecret($client_secret);
+	}
+	$register_site->request();
+	
+	setup_config($register_site->getResponseOxdId(), $client_id, $client_secret);
+	
+	$session->param('op_host', $ophost_ui);
+	$session->param('oxd_id', $register_site->getResponseOxdId());
+	$session->param('client_id', $client_id);
+	$session->param('client_secret', $client_secret);
+	
+}
+
+
+sub oxd_update {
+	
+	my $ophost_ui = $cgi->param("ophost");
+	my $auth_redirect_uri_ui = $cgi->param("redirect_uri");
+	my $post_logout_uri_ui = $cgi->param("post_logout_uri");
+	my $connection_type = $cgi->param("rbConnectionType");
+	my $oxd_port_ui = $cgi->param("port");
+	my $web_url = $cgi->param("restServiceUrl");
+	my $client_name_ui = $cgi->param("clientName");
+	
+	my $is_dynamic_op = dynamic_op_check($ophost_ui);
+	
+	update_config_file($ophost_ui, $is_dynamic_op, $auth_redirect_uri_ui, $post_logout_uri_ui, $connection_type, $oxd_port_ui, $web_url, $client_name_ui);
+	
+	if($is_dynamic_op eq true)
+	{
+		my $protection_access_token = getClientToken_authentication($ophost_ui, $client_id, $client_secret);
+		
+		$update_site_registration = new UpdateRegistration();
+		
+		$update_site_registration->setRequestAcrValues($acrValues);
+		$update_site_registration->setRequestOxdId($oxd_id);
+		$update_site_registration->setRequestAuthorizationRedirectUri($auth_redirect_uri_ui);
+		$update_site_registration->setRequestPostLogoutRedirectUri($post_logout_uri_ui);
+		$update_site_registration->setRequestContacts([$emal]);
+		$update_site_registration->setRequestGrantTypes($grantType);
+		$update_site_registration->setRequestResponseTypes($responseType);
+		$update_site_registration->setRequestScope($scope);
+		$update_site_registration->setRequestProtectionAccessToken($protection_access_token);
+		$update_site_registration->setRequestClientName($client_name_ui);
+		#$update_site_registration->setRequestClientSecretExpiresAt(1504051200000);# 1599943950 = 13th September 2020
+		$update_site_registration->request();
+	}
+	
+	print_html_form('Client updated successfully.');
+}
+
+sub oxd_introspectAccessToken {
+	
+	#my $ophost_ui = $cgi->param("ophost");
+	
+	Load_config_values();
+	
+	my $introspect_access_token = new IntrospectAccessToken( );
+	my $protection_access_token = getClientToken_authentication($opHost, $client_id, $client_secret);#Test2
+	
+	$introspect_access_token->setRequestOxdId($oxd_id);
+	$introspect_access_token->setRequestAccessToken($protection_access_token);
+	
+	$introspect_access_token->request();
+	
+	$response = Dumper( $introspect_access_token->getResponseData() );
+	
+	print_html_form($response);
+}
 
 sub oxd_delete {
 	
-	my $ophost_ui = '';
+	my $ophost_ui = $cgi->param("ophost");
+	
+	use TryCatch;
+	try {
+		#my $protection_access_token = getClientToken_authentication($ophost_ui, $client_id, $client_secret);#Test2
+		$oxd_remove = new OxdRemove();
+		$oxd_remove->setRequestOxdId($oxd_id);
+		#$oxd_remove->setRequestProtectionAccessToken($protection_access_token);#Test2
+		$oxd_remove->request();
+	} catch {
+		print "Error!"
+	};
+	
+	# $oxd_remove = new OxdRemove();
+	# $oxd_remove->setRequestOxdId($oxd_id);
+	# $oxd_remove->setRequestProtectionAccessToken($protection_access_token);
+	# $oxd_remove->request();
+	
+	
+	$ophost_ui = '';
 	my $is_dynamic_op = '';
 	my $auth_redirect_uri_ui = '';
 	my $post_logout_uri_ui = '';
@@ -578,37 +720,7 @@ sub oxd_delete {
 	update_config_file($ophost_ui, $is_dynamic_op, $auth_redirect_uri_ui, $post_logout_uri_ui, $connection_type, $oxd_port_ui, $web_url, $clientName);
 	setup_config('', '', '');
 	$session->clear(["clientId_visible", "client_id", "client_secret"]);
-	print_html_form('Client deleted');
-}
-
-
-sub protect_resource {
-	
-	# #### Without scope_expression
-	# $uma_rs_protect = new UmaRsProtect();
-	# $uma_rs_protect->setRequestOxdId($oxd_id);
-	# $uma_rs_protect->addConditionForPath(["GET"],["https://client.example.com:8090/cgi-bin/perl_api","https://client.example.com:8090/cgi-bin/perl_api1","https://client.example.com:8090/cgi-bin/perl_api2"], ["https://client.example.com:8090/cgi-bin/perl_api","https://client.example.com:8090/cgi-bin/perl_api1","https://client.example.com:8090/cgi-bin/perl_api2"]);
-	# $uma_rs_protect->addResource('/api.cgi');
-	# $uma_rs_protect->setRequestProtectionAccessToken(getClientToken_authentication());
-	# ########
-	
-	
-	#### Using scope_expression
-	$uma_rs_protect = new UmaRsProtect();
-	$uma_rs_protect->setRequestOxdId($oxd_id);
-	
-	%rule = ('and' => [{'or' => [{'var' => 0},{'var' => 1}]},{'var' => 2}]);
-	my $data = ["https://client.example.com:8090/cgi-bin/perl_api", "https://client.example.com:8090/cgi-bin/perl_api1", "https://client.example.com:8090/cgi-bin/perl_api2"];
-	
-	$uma_rs_protect->addConditionForPath(["GET"], [], [], $uma_rs_protect->getScopeExpression(\%rule, $data));
-	$uma_rs_protect->addResource('/api.cgi');
-	$uma_rs_protect->setRequestProtectionAccessToken(getClientToken_authentication());
-	########
-	
-	$uma_rs_protect->request();
-	if($uma_rs_protect->getResponseObject()->{status} eq 'ok') {
-		print_html_form('Resource protected');
-	}
+	print_html_form('Client removed successfully.');
 }
 
 

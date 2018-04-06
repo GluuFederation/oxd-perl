@@ -8,13 +8,13 @@
 
 <body onload="NDLoader.OnLoad('Content');" class="NDPage NDContentPage">
 
-<a name="Functions"></a><a name="Topic27"></a><div class="CTopic TGroup LPerl first">
+<a name="Functions"></a><a name="Topic32"></a><div class="CTopic TGroup LPerl first">
  <div class="CTitle">Functions</div>
 </div>
 
-<a name="setParams"></a><a name="Topic28"></a><div class="CTopic TFunction LPerl last">
+<a name="setParams"></a><a name="Topic33"></a><div class="CTopic TFunction LPerl last">
  <div class="CTitle">setParams</div>
- <div id="NDPrototype28" class="NDPrototype NoParameterForm">sub setParams</div>
+ <div id="NDPrototype33" class="NDPrototype NoParameterForm">sub setParams</div>
  <div class="CBody"><p>This method sets the parameters for get_tokens_by_code command.&nbsp; This module uses `request` method of OxdClient module for sending request to oxd-server</p><div class="CHeading">Parameters</div><table class="CDefinitionList"><tr><td class="CDLEntry">string $oxd_id</td><td class="CDLDefinition"><p>(Required) oxd Id from Client registration</p></td></tr><tr><td class="CDLEntry">string $code</td><td class="CDLDefinition"><p>(Required) Code from OP redirect URL</p></td></tr><tr><td class="CDLEntry">string $state</td><td class="CDLDefinition"><p>(Required) State from OP redirect URL</p></td></tr><tr><td class="CDLEntry">string $protection_access_token</td><td class="CDLDefinition"><p>Protection Acccess Token. OPTIONAL for `oxd-server` but REQUIRED for `oxd-https-extension`</p></td></tr></table><div class="CHeading">Returns</div><p>void</p><p>This module uses `getResponseObject` method of OxdClient module for getting response from oxd.</p><p><b>Example response from getResponseObject:</b></p><pre>{ <span class="SHString">&quot;status&quot;</span>: <span class="SHString">&quot;ok&quot;</span>, <span class="SHString">&quot;data&quot;</span>: { <span class="SHString">&quot;access_token&quot;</span>: <span class="SHString">&quot;cfa5b25f-09d4-47bf-8762-98719406ace2&quot;</span>, <span class="SHString">&quot;expires_in&quot;</span>: <span class="SHNumber">299</span>, <span class="SHString">&quot;refresh_token&quot;</span>: <span class="SHString">&quot;51798a79-5be4-47d1-a898-4a65fe207b5c&quot;</span>, <span class="SHString">&quot;id_token&quot;</span>: <span class="SHString">&quot;eyJraWQiOiIdfgfdvcdyhMltA&quot;</span>, <span class="SHString">&quot;id_token_claims&quot;</span>: { <span class="SHString">&quot;iss&quot;</span>: [<span class="SHString">&quot;https://idp-hostname&quot;</span>], <span class="SHString">&quot;sub&quot;</span>: [<span class="SHString">&quot;SGUMcFlAj3QlkOQVgwYpSozbjvynk4B2VNpr-mDnuVw&quot;</span>], <span class="SHString">&quot;aud&quot;</span>: [<span class="SHString">&quot;@!4116.DF7C.62D4.D0CF!0001!D420.A5E5!0008!6156.5BD4.5F9B.D172&quot;</span>], <span class="SHString">&quot;nonce&quot;</span>: [<span class="SHString">&quot;4pn3vgisdg4em0ups2ud79iig5&quot;</span>], <span class="SHString">&quot;exp&quot;</span>: [<span class="SHNumber">1513861298</span>], <span class="SHString">&quot;iat&quot;</span>: [<span class="SHNumber">1513857698</span>], <span class="SHString">&quot;at_hash&quot;</span>: [<span class="SHString">&quot;8tCEomWN_VySJwkJ4lxYfA&quot;</span>] } } }</pre></div>
 </div>
 

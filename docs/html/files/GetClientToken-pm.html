@@ -8,13 +8,13 @@
 
 <body onload="NDLoader.OnLoad('Content');" class="NDPage NDContentPage">
 
-<a name="Functions"></a><a name="Topic29"></a><div class="CTopic TGroup LPerl first">
+<a name="Functions"></a><a name="Topic34"></a><div class="CTopic TGroup LPerl first">
  <div class="CTitle">Functions</div>
 </div>
 
-<a name="setParams"></a><a name="Topic30"></a><div class="CTopic TFunction LPerl last">
+<a name="setParams"></a><a name="Topic35"></a><div class="CTopic TFunction LPerl last">
  <div class="CTitle">setParams</div>
- <div id="NDPrototype30" class="NDPrototype NoParameterForm">sub setParams</div>
+ <div id="NDPrototype35" class="NDPrototype NoParameterForm">sub setParams</div>
  <div class="CBody"><p>This method sets the parameters for get_client_token command.&nbsp; This module uses `request` method of OxdClient module for sending request to oxd-server</p><div class="CHeading">Parameters</div><table class="CDefinitionList"><tr><td class="CDLEntry">string $client_id</td><td class="CDLDefinition"><p>(Required) Client Id from Client registration</p></td></tr><tr><td class="CDLEntry">string $client_secret</td><td class="CDLDefinition"><p>(Required) Client Secret. Must be used together with ClientId.</p></td></tr><tr><td class="CDLEntry">string $op_host</td><td class="CDLDefinition"><p>(Required) Url that must points to a valid OpenID Connect Provider that supports client registration like Gluu Server.</p></td></tr><tr><td class="CDLEntry">string $op_discovery_path</td><td class="CDLDefinition"><p>(Optional) Path to discovery document</p></td></tr><tr><td class="CDLEntry">array $scope</td><td class="CDLDefinition"><p>(Optional) Scope</p></td></tr></table><div class="CHeading">Returns</div><p>void</p><p>This module uses `getResponseObject` method of OxdClient module for getting response from oxd.</p><p><b>Example response from getResponseObject:</b></p><pre>{ <span class="SHString">&quot;status&quot;</span>: <span class="SHString">&quot;ok&quot;</span>, <span class="SHString">&quot;data&quot;</span>: { <span class="SHString">&quot;access_token&quot;</span>: <span class="SHString">&quot;7ec389c5-64f8-49a3-a80c-e3e16d134bcb&quot;</span>, <span class="SHString">&quot;expires_in&quot;</span>: <span class="SHNumber">299</span>, <span class="SHString">&quot;refresh_token&quot;</span>: <span class="SHKeyword">null</span>, <span class="SHString">&quot;scope&quot;</span>: <span class="SHString">&quot;openid&quot;</span> } }</pre></div>
 </div>
 

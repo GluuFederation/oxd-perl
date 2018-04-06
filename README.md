@@ -530,6 +530,7 @@ my $oxdId = $session->param('oxd_id');
 
 $uma_rs_protect = new UmaRsProtect();
 $uma_rs_protect->setRequestOxdId($oxdId);
+$uma_rs_protect->setOverwrite(true);
 
 $uma_rs_protect->addConditionForPath(["GET"],["https://photoz.example.com/dev/actions/view"], ["https://photoz.example.com/dev/actions/view"]);
 $uma_rs_protect->addConditionForPath(["POST"],[ "https://photoz.example.com/dev/actions/add"],[ "https://photoz.example.com/dev/actions/add"]);
@@ -545,6 +546,7 @@ print Dumper( $uma_rs_protect->getResponseObject() );
 ```perl
 my $uma_rs_protect = new UmaRsProtect();
 $uma_rs_protect->setRequestOxdId($oxdId);
+$uma_rs_protect->setOverwrite(true);
 
 %rule = ('and' => [{'or' => [{'var' => 0},{'var' => 1}]},{'var' => 2}]);
 $data = ["http://photoz.example.com/dev/actions/all", "http://photoz.example.com/dev/actions/add", "http://photoz.example.com/dev/actions/internalClient"];

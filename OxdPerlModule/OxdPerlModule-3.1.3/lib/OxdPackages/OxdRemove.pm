@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-# GetUserInfo.pm, a number as an object
+# OxdRemove.pm, a number as an object
 
 #
 # Gluu-oxd-library
@@ -29,102 +29,76 @@
 # THE SOFTWARE.
 #
 # @package	Gluu-oxd-library
-# @version	3.1.2
+# @version 	3.1.3
 # @author	Sobhan Panda
 # @author_email	sobhan@centroxy.com
 # @copyright	Copyright (c) 2018, Gluu inc federation (https://gluu.org/)
 # @license	http://opensource.org/licenses/MIT	MIT License
 # @link		https://gluu.org/
-# @since	Version 3.1.2
+# @since	Version 3.1.3
 # @filesource
 #/
 
-package GetUserInfo;	# This is the &quot;Class&quot;
-    use OxdPackages::OxdClient;
+use JSON::PP;
+
+package OxdRemove;	# This is the &quot;Class&quot;
+    use vars qw($VERSION);
+    $VERSION = '0.01';
+    
+	use OxdPackages::OxdClient;
 	use base qw(OxdClient Class::Accessor);
+	#use base 'OxdClient';
 	use strict;
 	our @ISA = qw(OxdClient);    # inherits from OxdClient
 	
-	use vars qw($VERSION);
-    $VERSION = '0.01';
-	
 	sub new {
 		my $class = shift;
+		
 		my $self = {
-			# @var string $request_oxd_id                            This parameter you must get after registration site in gluu-server
+			
+			# @var string _request_oxd_id				OxdId from Client registration
 			_request_oxd_id => shift,
 			
-			# @var string $request_access_token			This parameter you must get after using get_token_code class
-			_request_access_token => shift,
-			
-			# @var array $request_protection_access_token		To protect the command with access token
+			# @var array $request_protection_access_token          To protect the command with access token
 			_request_protection_access_token => shift,
 			
 			# Response parameter from oxd-server
-			# Showing logedin user information
-			# @var array $response_claims
-			_response_claims => shift,
-        };
-		# Print all the values just for clarification.
-		#print "setRequestOxdId is $self->{_request_oxd_id}<br>";
-		#print "setRequestCode is $self->{_request_code}<br>";
-		#print "setRequestState is $self->{_request_state}<br>";
-		bless $self, $class;
+			# It is basic parameter for other protocols
+			#
+			# @var string _response_oxd_id
+			_response_oxd_id => shift,
+
+		};
 		
+		bless $self, $class;
 		return $self;
-	} 
+	}
 	
-	
-   
-    # @return array
+	sub _initialize {} 
     
-    sub getResponseClaims
-    {   
-		my( $self ) = @_;
-		$self->{_response_claims} = $self->getResponseData()->{claims};
-		return $self->{_response_claims};
-    }
-
     
-    # @return string
-    
-    sub getRequestAccessToken
-    {   
-		my( $self ) = @_;
-		return $self->{_request_access_token};
-    }
-
-    
-    # @param string $request_access_token
+    # @param string $request_op_host
     # @return void
-    
-    sub setRequestAccessToken
-    {
-		my ( $self, $request_access_token ) = @_;
-		$self->{_request_access_token} = $request_access_token if defined($request_access_token);
-		return $self->{_request_access_token};
-    }
-
-    
+    sub setRequestOxdId {
+		my ( $self, $request_op_host ) = @_;
+		$self->{_request_oxd_id} = $request_op_host if defined($request_op_host);
+		return $self->{_request_oxd_id};
+	}
+  
     # @return string
-    
-    sub getRequestOxdId
-    {  
+    sub getRequestOxdId {
 		my( $self ) = @_;
 		return $self->{_request_oxd_id};
-    }
-
+	}
     
-    # @param string $request_oxd_id
-    # @return void
-    
-    sub setRequestOxdId
-    {   
-		my ( $self, $request_oxd_id ) = @_;
-		$self->{_request_oxd_id} = $request_oxd_id if defined($request_oxd_id);
-		return $self->{_request_oxd_id};
-    }
 
+    # @return string
+    sub getResponseOxdId{
+		my( $self ) = @_;
+		$self->{_response_oxd_id} = $self->getResponseData()->{oxd_id};
+        return $self->{_response_oxd_id};
+    }
+    
     
     # @return array
     sub getRequestProtectionAccessToken
@@ -142,38 +116,34 @@ package GetUserInfo;	# This is the &quot;Class&quot;
 		$self->{_request_protection_access_token} = $request_protection_access_token if defined($request_protection_access_token);
 		return $self->{_request_protection_access_token};
 	}
-	
-	
-    
+
     # Protocol command to oxd server
     # @return void
-    
-    sub setCommand
-    {
+    sub setCommand{
+		# my $command = 'remove_site';
         my ( $self, $command ) = @_;
-		$self->{_command} = 'get_user_info';
+		$self->{_command} = 'remove_site';
 		return $self->{_command};
+		#return $command;
     }
     
-    # Protocol command to oXD to http server
+    # Protocol command to oxd to http server
     # @return void
-    
-    sub sethttpCommand
-    {
+    sub sethttpCommand{
+		# my $command = 'remove-site';
         my ( $self, $httpCommand ) = @_;
-		$self->{_httpcommand} = 'get-user-info';
+		$self->{_httpcommand} = 'remove-site';
 		return $self->{_httpcommand};
+		#return $httpcommand;
     }
-	
+    
     # Method: setParams
-    # This method sets the parameters for get_user_info command.
+    # This method sets the parameters for remove_site command.
     # This module uses `request` method of OxdClient module for sending request to oxd-server
     # 
     # Parameters:
     #
     #	string $oxd_id - (Required) oxd Id from Client registration
-    #
-    #	string $access_token - (Required) access Token from get_tokens_by_code or get_access_token_by_refresh_token command
     #
     #	string $protection_access_token - Protection Acccess Token. OPTIONAL for `oxd-server` but REQUIRED for `oxd-https-extension`
     #
@@ -184,20 +154,22 @@ package GetUserInfo;	# This is the &quot;Class&quot;
     # 
     # *Example response from getResponseObject:*
     # --- Code
-    # { "status": "ok", "data": { "claims": { "sub": ["SGUMcFlAj3QlkOQVgwYpSozbjvynk4B2VNpr-mDnuVw"], "name": ["Jane Doe"], "given_name": ["Jane"], "family_name": ["Doe"], "preferred_username": ["j.doe"], "email": ["janedoe@example.com"], "picture": null } } }
+    # { "status":"ok", "data":{ "oxd_id":"c73134c8-c4ca-4bab-9baa-2e0ca20cc433" } }
     # ---
     #
-    sub setParams
-    {   
+    sub setParams{
+		
 		my ( $self, $params ) = @_;
-        my $paramsArray = {
+		#use Data::Dumper;
+		my $paramsArray = {
             "oxd_id" => $self->getRequestOxdId(),
-            "access_token" => $self->getRequestAccessToken(),
             "protection_access_token"=> $self->getRequestProtectionAccessToken()
         };
-        $self->{_params} = $paramsArray;
+       
+		$self->{_params} = $paramsArray;
 		return $self->{_params};
+        #print Dumper( $params );
+        #return $paramsArray;
     }
-	 
-	
+    
 1;		# this 1; is neccessary for our class to work

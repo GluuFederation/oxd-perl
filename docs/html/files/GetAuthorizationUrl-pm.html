@@ -8,13 +8,13 @@
 
 <body onload="NDLoader.OnLoad('Content');" class="NDPage NDContentPage">
 
-<a name="Functions"></a><a name="Topic31"></a><div class="CTopic TGroup LPerl first">
+<a name="Functions"></a><a name="Topic36"></a><div class="CTopic TGroup LPerl first">
  <div class="CTitle">Functions</div>
 </div>
 
-<a name="setParams"></a><a name="Topic32"></a><div class="CTopic TFunction LPerl last">
+<a name="setParams"></a><a name="Topic37"></a><div class="CTopic TFunction LPerl last">
  <div class="CTitle">setParams</div>
- <div id="NDPrototype32" class="NDPrototype NoParameterForm">sub setParams</div>
+ <div id="NDPrototype37" class="NDPrototype NoParameterForm">sub setParams</div>
  <div class="CBody"><p>This method sets the parameters for get_authorization_url command.&nbsp; This module uses `request` method of OxdClient module for sending request to oxd-server</p><div class="CHeading">Parameters</div><table class="CDefinitionList"><tr><td class="CDLEntry">string $oxd_id</td><td class="CDLDefinition"><p>(Required) oxd Id from Client registration</p></td></tr><tr><td class="CDLEntry">array $scope</td><td class="CDLDefinition"><p>(Optional) Scope</p></td></tr><tr><td class="CDLEntry">array $acr_values</td><td class="CDLDefinition"><p>(Optional) ACR Values</p></td></tr><tr><td class="CDLEntry">string $prompt</td><td class="CDLDefinition"><p>(Optional) Prompt. If value not set, this field is skipped. prompt=login is REQUIRED if you want to force alter current user session. In case user is already logged in from SITE1 and SITE2 construsts authorization request and want to force alter current user session.</p></td></tr><tr><td class="CDLEntry">dict $custom_parameters</td><td class="CDLDefinition"><p>(Optional) ACR Values</p></td></tr><tr><td class="CDLEntry">string $protection_access_token</td><td class="CDLDefinition"><p>Protection Acccess Token. OPTIONAL for `oxd-server` but REQUIRED for `oxd-https-extension`</p></td></tr></table><div class="CHeading">Returns</div><p>void</p><p>This module uses `getResponseObject` method of OxdClient module for getting response from oxd.</p><p><b>Example response from getResponseObject:</b></p><pre>{ <span class="SHString">&quot;status&quot;</span>: <span class="SHString">&quot;ok&quot;</span>, <span class="SHString">&quot;data&quot;</span>: { <span class="SHString">&quot;authorization_url&quot;</span>: <span class="SHString">&quot;https://idp-hostname/oxauth/restv1/authorize?response_type=code&amp;client_id=@!4116.DF7C.62D4.D0CF!0001!D420.A5E5!0008!6156.5BD4.5F9B.D172&amp;redirect_uri=https://client.example.com:44383/Home/GetUserInfo&amp;scope=openid+profile+email+uma_protection+uma_authorization&amp;state=cim3uintftqoqckqhgd1vbs6iv&amp;nonce=4pn3vgisdg4em0ups2ud79iig5&amp;custom_response_headers=%5B%7B%22param1%22%3A%22value1%22%7D%2C%7B%22param2%22%3A%22value2%22%7D%5D&quot;</span> } }</pre></div>
 </div>
 

@@ -1,1 +1,1 @@
-NDFramePage.OnPageTitleLoaded("File:OxdSetupClient.pm","OxdSetupClient.pm");NDSummary.OnSummaryLoaded("File:OxdSetupClient.pm",[["Perl","Perl"]],[["Functions","Function"],["Groups","Group"]],[[17,0,1,"Functions","Functions"],[18,0,0,"setParams","setParams"]]);
+NDFramePage.OnPageTitleLoaded("File:OxdSetupClient.pm","OxdSetupClient.pm");NDSummary.OnSummaryLoaded("File:OxdSetupClient.pm",[["Perl","Perl"]],[["Functions","Function"],["Groups","Group"]],[[15,0,1,"Functions","Functions"],[16,0,0,"setParams","setParams"]]);

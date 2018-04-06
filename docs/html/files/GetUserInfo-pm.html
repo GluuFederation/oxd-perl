@@ -8,13 +8,13 @@
 
 <body onload="NDLoader.OnLoad('Content');" class="NDPage NDContentPage">
 
-<a name="Functions"></a><a name="Topic25"></a><div class="CTopic TGroup LPerl first">
+<a name="Functions"></a><a name="Topic30"></a><div class="CTopic TGroup LPerl first">
  <div class="CTitle">Functions</div>
 </div>
 
-<a name="setParams"></a><a name="Topic26"></a><div class="CTopic TFunction LPerl last">
+<a name="setParams"></a><a name="Topic31"></a><div class="CTopic TFunction LPerl last">
  <div class="CTitle">setParams</div>
- <div id="NDPrototype26" class="NDPrototype NoParameterForm">sub setParams</div>
+ <div id="NDPrototype31" class="NDPrototype NoParameterForm">sub setParams</div>
  <div class="CBody"><p>This method sets the parameters for get_user_info command.&nbsp; This module uses `request` method of OxdClient module for sending request to oxd-server</p><div class="CHeading">Parameters</div><table class="CDefinitionList"><tr><td class="CDLEntry">string $oxd_id</td><td class="CDLDefinition"><p>(Required) oxd Id from Client registration</p></td></tr><tr><td class="CDLEntry">string $access_token</td><td class="CDLDefinition"><p>(Required) access Token from get_tokens_by_code or get_access_token_by_refresh_token command</p></td></tr><tr><td class="CDLEntry">string $protection_access_token</td><td class="CDLDefinition"><p>Protection Acccess Token. OPTIONAL for `oxd-server` but REQUIRED for `oxd-https-extension`</p></td></tr></table><div class="CHeading">Returns</div><p>void</p><p>This module uses `getResponseObject` method of OxdClient module for getting response from oxd.</p><p><b>Example response from getResponseObject:</b></p><pre>{ <span class="SHString">&quot;status&quot;</span>: <span class="SHString">&quot;ok&quot;</span>, <span class="SHString">&quot;data&quot;</span>: { <span class="SHString">&quot;claims&quot;</span>: { <span class="SHString">&quot;sub&quot;</span>: [<span class="SHString">&quot;SGUMcFlAj3QlkOQVgwYpSozbjvynk4B2VNpr-mDnuVw&quot;</span>], <span class="SHString">&quot;name&quot;</span>: [<span class="SHString">&quot;Jane Doe&quot;</span>], <span class="SHString">&quot;given_name&quot;</span>: [<span class="SHString">&quot;Jane&quot;</span>], <span class="SHString">&quot;family_name&quot;</span>: [<span class="SHString">&quot;Doe&quot;</span>], <span class="SHString">&quot;preferred_username&quot;</span>: [<span class="SHString">&quot;j.doe&quot;</span>], <span class="SHString">&quot;email&quot;</span>: [<span class="SHString">&quot;janedoe@example.com&quot;</span>], <span class="SHString">&quot;picture&quot;</span>: <span class="SHKeyword">null</span> } } }</pre></div>
 </div>
 
